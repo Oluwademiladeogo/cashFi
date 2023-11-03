@@ -1,5 +1,17 @@
 import * as mongoose from 'mongoose';
-const userModel = mongoose.model(
+
+interface users {
+  username:string,
+  email:string,
+  number:number,
+  password:string,
+  passwordSalt:string,
+  pin:string,
+  pinSalt:string,
+  balance:number,
+  history:[string],
+}
+const userModel = mongoose.model<users>(
   'users',
   new mongoose.Schema({
     username: {
@@ -13,7 +25,7 @@ const userModel = mongoose.model(
       unique: true,
       minlength: 5,
       maxlength: 255,
-      required: true,
+      required: true, 
     },
     number: {
       type: Number,
@@ -48,7 +60,4 @@ const userModel = mongoose.model(
     history: [String]
   }),
 );
-interface User {
-  //awaiting
-}
-export { userModel, User };
+export { userModel, users };

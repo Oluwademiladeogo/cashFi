@@ -10,7 +10,6 @@ import {
 import { Response } from 'express';
 import { withdrawMoneyDto } from '../dtos/withdraw.dto';
 import { UsersService } from 'src/services/users/users.service';
-import { WithdrawService } from 'src/services/withdraw/withdraw.service';
 import { HistoryService } from 'src/services/history/history.service';
 import { compare } from 'src/helpers/auth.helper';
 
@@ -18,7 +17,6 @@ import { compare } from 'src/helpers/auth.helper';
 export class WithdrawController {
   constructor(
     private usersService: UsersService,
-    private withdrawService: WithdrawService,
     private historyService: HistoryService,
   ) {}
   @UsePipes(new ValidationPipe())

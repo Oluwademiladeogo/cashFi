@@ -46,6 +46,7 @@ const userModel = mongoose.model('users', new mongoose.Schema({
         type: Number,
         required: true,
     },
+    history: [String]
 }));
 exports.userModel = userModel;
 //# sourceMappingURL=userschema.js.map

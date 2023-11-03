@@ -35,8 +35,10 @@ let WithdrawController = class WithdrawController {
         const aggBal = user.balance + 1000;
         if (data.amount > aggBal)
             throw new common_1.HttpException('insufficient funds', common_1.HttpStatus.BAD_REQUEST);
-        const message = "";
-        this.historyService.insertHistory(user, message);
+        const amount = data.amount - user.balance;
+        await this.usersService.updateUserBalance(user.id, amount);
+        const message = '';
+        await this.historyService.insertHistory(user.id, message);
     }
 };
 exports.WithdrawController = WithdrawController;

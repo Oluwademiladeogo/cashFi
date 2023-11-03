@@ -1,4 +1,4 @@
 export declare class HistoryService {
-    getHistory(user: any): void;
-    insertHistory(user: any, message: string): void;
+    getHistory(id: any): Promise<string[]>;
+    insertHistory(id: any, message: string): Promise<any>;
 }

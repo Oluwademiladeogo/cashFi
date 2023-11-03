@@ -25,7 +25,7 @@
 /// <reference types="mongoose/types/inferschematype" />
 export declare class UsersService {
     newUser(user: any): Promise<void>;
-    getUser(email: any): Promise<import("mongoose").Document<unknown, {}, {
+    getUser(email: string): Promise<import("mongoose").Document<unknown, {}, {
         number: number;
         username: string;
         email: string;
@@ -34,6 +34,7 @@ export declare class UsersService {
         pin: string;
         pinSalt: string;
         balance: number;
+        history: string[];
     }> & {
         number: number;
         username: string;
@@ -43,7 +44,9 @@ export declare class UsersService {
         pin: string;
         pinSalt: string;
         balance: number;
+        history: string[];
     } & {
         _id: import("mongoose").Types.ObjectId;
     }>;
+    updateUserBalance(userId: string, amount: number): Promise<void>;
 }

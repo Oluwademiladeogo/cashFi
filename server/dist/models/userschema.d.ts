@@ -8,6 +8,7 @@ declare const userModel: mongoose.Model<{
     pin: string;
     pinSalt: string;
     balance: number;
+    history: string[];
 }, {}, {}, {}, mongoose.Document<unknown, {}, {
     number: number;
     username: string;
@@ -17,6 +18,7 @@ declare const userModel: mongoose.Model<{
     pin: string;
     pinSalt: string;
     balance: number;
+    history: string[];
 }> & {
     number: number;
     username: string;
@@ -26,6 +28,7 @@ declare const userModel: mongoose.Model<{
     pin: string;
     pinSalt: string;
     balance: number;
+    history: string[];
 } & {
     _id: mongoose.Types.ObjectId;
 }, mongoose.Schema<any, mongoose.Model<any, any, any, any, any, any>, {}, {}, {}, {}, mongoose.DefaultSchemaOptions, {
@@ -37,6 +40,7 @@ declare const userModel: mongoose.Model<{
     pin: string;
     pinSalt: string;
     balance: number;
+    history: string[];
 }, mongoose.Document<unknown, {}, mongoose.FlatRecord<{
     number: number;
     username: string;
@@ -46,6 +50,7 @@ declare const userModel: mongoose.Model<{
     pin: string;
     pinSalt: string;
     balance: number;
+    history: string[];
 }>> & mongoose.FlatRecord<{
     number: number;
     username: string;
@@ -55,7 +60,10 @@ declare const userModel: mongoose.Model<{
     pin: string;
     pinSalt: string;
     balance: number;
+    history: string[];
 }> & {
     _id: mongoose.Types.ObjectId;
 }>>;
-export { userModel };
+interface User {
+}
+export { userModel, User };

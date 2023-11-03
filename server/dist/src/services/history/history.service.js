@@ -8,10 +8,26 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HistoryService = void 0;
 const common_1 = require("@nestjs/common");
+const userschema_1 = require("../../../models/userschema");
 let HistoryService = class HistoryService {
-    getHistory(user) {
+    async getHistory(id) {
+        const user = await userschema_1.userModel.findOne({ id: id });
+        if (!user)
+            throw new common_1.HttpException("User not found", common_1.HttpStatus.BAD_REQUEST);
+        return user.history;
     }
-    insertHistory(user, message) {
+    async insertHistory(id, message) {
+        try {
+            const user = await userschema_1.userModel.findOne({ id: id });
+            const history = user.history;
+            history.push(message);
+            user.history = history;
+            await user.save();
+            return 'done';
+        }
+        catch (error) {
+            return error;
+        }
     }
 };
 exports.HistoryService = HistoryService;

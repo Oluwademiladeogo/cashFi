@@ -15,8 +15,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.HistoryController = void 0;
 const common_1 = require("@nestjs/common");
 const history_dto_1 = require("../dtos/history.dto");
+const history_service_1 = require("../../../services/history/history.service");
 let HistoryController = class HistoryController {
-    getUserHistory(user) {
+    constructor(HistoryService) {
+        this.HistoryService = HistoryService;
+    }
+    async getUserHistory(user, res) {
+        const history = await this.HistoryService.getHistory(user.id);
+        res.send(history);
     }
 };
 exports.HistoryController = HistoryController;
@@ -24,10 +30,11 @@ __decorate([
     (0, common_1.Get)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [history_dto_1.historyDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [history_dto_1.historyDto, Object]),
+    __metadata("design:returntype", Promise)
 ], HistoryController.prototype, "getUserHistory", null);
 exports.HistoryController = HistoryController = __decorate([
-    (0, common_1.Controller)('history')
+    (0, common_1.Controller)('history'),
+    __metadata("design:paramtypes", [history_service_1.HistoryService])
 ], HistoryController);
 //# sourceMappingURL=history.controller.js.map

@@ -1,3 +1,3 @@
 export declare class DepositService {
-    depositData(data: any): void;
+    depositData(data: any): Promise<any>;
 }

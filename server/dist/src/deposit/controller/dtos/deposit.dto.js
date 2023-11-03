@@ -19,7 +19,7 @@ __decorate([
     __metadata("design:type", Number)
 ], depositDto.prototype, "accountNumber", void 0);
 __decorate([
-    (0, class_validator_1.IsAlpha)(),
+    (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
-], depositDto.prototype, "bankName", void 0);
+], depositDto.prototype, "amount", void 0);
 //# sourceMappingURL=deposit.dto.js.map

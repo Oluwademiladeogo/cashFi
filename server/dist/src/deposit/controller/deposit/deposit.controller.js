@@ -16,12 +16,18 @@ exports.DepositController = void 0;
 const common_1 = require("@nestjs/common");
 const deposit_dto_1 = require("../dtos/deposit.dto");
 const deposit_service_1 = require("../../../services/deposit/deposit.service");
+const history_service_1 = require("../../../services/history/history.service");
 let DepositController = class DepositController {
-    constructor(depositService) {
+    constructor(depositService, HistoryService) {
         this.depositService = depositService;
+        this.HistoryService = HistoryService;
     }
-    depositMoney(data) {
-        this.depositService.depositData(data);
+    async depositMoney(data, res) {
+        const id = '';
+        await this.depositService.depositData(data);
+        const message = "";
+        await this.HistoryService.insertHistory(id, message);
+        res.send("Done");
     }
 };
 exports.DepositController = DepositController;
@@ -30,11 +36,11 @@ __decorate([
     (0, common_1.UsePipes)(new common_1.ValidationPipe()),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [deposit_dto_1.depositDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [deposit_dto_1.depositDto, Object]),
+    __metadata("design:returntype", Promise)
 ], DepositController.prototype, "depositMoney", null);
 exports.DepositController = DepositController = __decorate([
     (0, common_1.Controller)('deposit'),
-    __metadata("design:paramtypes", [deposit_service_1.DepositService])
+    __metadata("design:paramtypes", [deposit_service_1.DepositService, history_service_1.HistoryService])
 ], DepositController);
 //# sourceMappingURL=deposit.controller.js.map

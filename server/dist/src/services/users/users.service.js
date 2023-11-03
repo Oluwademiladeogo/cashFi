@@ -29,6 +29,13 @@ let UsersService = class UsersService {
     async getUser(email) {
         return await userschema_1.userModel.findOne({ email: email });
     }
+    async updateUserBalance(userId, amount) {
+        const user = await userschema_1.userModel.findById(userId);
+        if (!user)
+            throw new common_1.HttpException('Error querying db', common_1.HttpStatus.EXPECTATION_FAILED);
+        user.balance = amount;
+        await user.save();
+    }
 };
 exports.UsersService = UsersService;
 exports.UsersService = UsersService = __decorate([

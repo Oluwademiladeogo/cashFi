@@ -8,8 +8,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DepositService = void 0;
 const common_1 = require("@nestjs/common");
+const userschema_1 = require("../../../models/userschema");
 let DepositService = class DepositService {
-    depositData(data) {
+    async depositData(data) {
+        try {
+            const account = await userschema_1.userModel.findOne({ number: data.accountNumber });
+            if (!account)
+                throw new common_1.HttpException('Account not found', common_1.HttpStatus.BAD_REQUEST);
+            account.balance += data.balance;
+            await account.save();
+            return 'done';
+        }
+        catch (error) {
+            return error;
+        }
     }
 };
 exports.DepositService = DepositService;

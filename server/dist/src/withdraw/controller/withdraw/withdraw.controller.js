@@ -16,13 +16,11 @@ exports.WithdrawController = void 0;
 const common_1 = require("@nestjs/common");
 const withdraw_dto_1 = require("../dtos/withdraw.dto");
 const users_service_1 = require("../../../services/users/users.service");
-const withdraw_service_1 = require("../../../services/withdraw/withdraw.service");
 const history_service_1 = require("../../../services/history/history.service");
 const auth_helper_1 = require("../../../helpers/auth.helper");
 let WithdrawController = class WithdrawController {
-    constructor(usersService, withdrawService, historyService) {
+    constructor(usersService, historyService) {
         this.usersService = usersService;
-        this.withdrawService = withdrawService;
         this.historyService = historyService;
     }
     async doWithdraw(res, data) {
@@ -53,7 +51,6 @@ __decorate([
 exports.WithdrawController = WithdrawController = __decorate([
     (0, common_1.Controller)('withdraw'),
     __metadata("design:paramtypes", [users_service_1.UsersService,
-        withdraw_service_1.WithdrawService,
         history_service_1.HistoryService])
 ], WithdrawController);
 //# sourceMappingURL=withdraw.controller.js.map

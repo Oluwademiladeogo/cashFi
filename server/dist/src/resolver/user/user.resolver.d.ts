@@ -23,9 +23,12 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose" />
 /// <reference types="mongoose/types/inferschematype" />
-export declare class UsersService {
+import { UsersService } from 'src/services/users/users.service';
+export declare class UserResolver {
+    private readonly UserService;
+    constructor(UserService: UsersService);
     newUser(user: any): Promise<void>;
-    getUser(email: string): Promise<import("mongoose").Document<unknown, {}, import("models/userschema").users> & import("models/userschema").users & {
+    getUser(email: string): Promise<import("mongoose").Document<unknown, {}, import("../../../models/userschema").users> & import("../../../models/userschema").users & {
         _id: import("mongoose").Types.ObjectId;
     }>;
     updateUserBalance(userId: string, amount: number): Promise<void>;

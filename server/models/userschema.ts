@@ -45,7 +45,10 @@ const userModel = mongoose.model(
       type: Number,
       required: true,
     },
+    history: [String]
   }),
 );
-
-export { userModel };
+interface User {
+  //awaiting
+}
+export { userModel, User };

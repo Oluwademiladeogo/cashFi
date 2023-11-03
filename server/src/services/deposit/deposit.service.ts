@@ -1,6 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { userModel } from 'models/userschema';
-
 @Injectable()
 export class DepositService {
   async depositData(data) {

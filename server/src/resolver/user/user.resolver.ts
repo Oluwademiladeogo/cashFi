@@ -17,4 +17,3 @@ export class UserResolver {
         return await this.UserService.updateUserBalance(userId, amount)
     }
 }
-git commit -m "Added resolver graphql"

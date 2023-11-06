@@ -7,10 +7,11 @@ import {
 import { UsersService } from 'src/services/users/users.service';
 import { SignupController } from './controller/signup/signup.controller';
 import { AuthMiddleware } from 'src/middlewares/auth/auth.middleware';
+import { UserResolver } from 'src/resolver/user/user.resolver';
 
 @Module({
   controllers: [SignupController],
-  providers: [UsersService],
+  providers: [UsersService, UserResolver],
 })
 export class SignupModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

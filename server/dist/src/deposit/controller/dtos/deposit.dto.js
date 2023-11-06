@@ -17,7 +17,7 @@ exports.depositDto = depositDto;
 __decorate([
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
-], depositDto.prototype, "accountNumber", void 0);
+], depositDto.prototype, "number", void 0);
 __decorate([
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)

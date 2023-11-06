@@ -12,34 +12,35 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SignupController = void 0;
+exports.DashboardController = void 0;
 const common_1 = require("@nestjs/common");
-const NewUser_dto_1 = require("./dtos/NewUser.dto");
+const auth_helper_1 = require("../../../helpers/auth.helper");
 const user_resolver_1 = require("../../../resolver/user/user.resolver");
-let SignupController = class SignupController {
-    constructor(UsersResolver) {
-        this.UsersResolver = UsersResolver;
+let DashboardController = class DashboardController {
+    constructor(UserResolver) {
+        this.UserResolver = UserResolver;
     }
-    async SignupUser(user, res) {
-        const userObject = await this.UsersResolver.getUser(user.email);
-        if (userObject)
-            throw new common_1.HttpException('User already registered', common_1.HttpStatus.CONFLICT);
-        await this.UsersResolver.newUser(user);
-        res.status(201).json('User added successfully');
+    async getDashboard(req, res) {
+        const bearerToken = await (0, auth_helper_1.getToken)(req, res);
+        const payload = await (0, auth_helper_1.getTokenPayload)(bearerToken);
+        const response = await this.UserResolver.getUser(payload.email);
+        if (response)
+            res
+                .status(200)
+                .json({ name: response.username, balance: response.balance });
     }
 };
-exports.SignupController = SignupController;
+exports.DashboardController = DashboardController;
 __decorate([
-    (0, common_1.Post)(),
-    (0, common_1.UsePipes)(new common_1.ValidationPipe()),
-    __param(0, (0, common_1.Body)()),
+    (0, common_1.Get)(),
+    __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [NewUser_dto_1.NewUserDto, Object]),
+    __metadata("design:paramtypes", [Request, Object]),
     __metadata("design:returntype", Promise)
-], SignupController.prototype, "SignupUser", null);
-exports.SignupController = SignupController = __decorate([
-    (0, common_1.Controller)('signup'),
+], DashboardController.prototype, "getDashboard", null);
+exports.DashboardController = DashboardController = __decorate([
+    (0, common_1.Controller)('dashboard'),
     __metadata("design:paramtypes", [user_resolver_1.UserResolver])
-], SignupController);
-//# sourceMappingURL=signup.controller.js.map
+], DashboardController);
+//# sourceMappingURL=dashboard.controller.js.map

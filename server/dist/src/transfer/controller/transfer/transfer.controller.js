@@ -12,51 +12,56 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WithdrawController = void 0;
+exports.TransferController = void 0;
 const common_1 = require("@nestjs/common");
-const withdraw_dto_1 = require("../dtos/withdraw.dto");
-const users_service_1 = require("../../../services/users/users.service");
-const history_service_1 = require("../../../services/history/history.service");
+const transfer_dto_1 = require("../dtos/transfer.dto");
 const auth_helper_1 = require("../../../helpers/auth.helper");
 const user_resolver_1 = require("../../../resolver/user/user.resolver");
-let WithdrawController = class WithdrawController {
-    constructor(usersService, historyService, userResolver) {
+const users_service_1 = require("../../../services/users/users.service");
+const history_service_1 = require("../../../services/history/history.service");
+let TransferController = class TransferController {
+    constructor(usersService, userResolver, historyService) {
         this.usersService = usersService;
-        this.historyService = historyService;
         this.userResolver = userResolver;
+        this.historyService = historyService;
     }
-    async doWithdraw(data, res) {
+    async transferMoney(data, req, res) {
+        const token = await (0, auth_helper_1.getToken)(req, res);
+        const payload = await (0, auth_helper_1.getTokenPayload)(token);
+        const me = await this.userResolver.getUser(payload.email);
         const user = await this.userResolver.getUserByNumber(data.number);
         if (!user)
             return res.json('User not found');
         const result = await (0, auth_helper_1.compare)(data.pin, user.pin);
         if (!result)
             throw new common_1.HttpException('Invalid pin', common_1.HttpStatus.BAD_REQUEST);
-        const aggBal = user.balance + 1000;
+        const aggBal = me.balance + 1000;
         if (data.amount > aggBal)
             throw new common_1.HttpException('insufficient funds', common_1.HttpStatus.BAD_REQUEST);
-        const amount = user.balance - data.amount;
-        await this.usersService.updateUserBalance(user.id, amount);
+        const receiverAmount = user.balance + data.amount;
+        const giverAmount = user.balance - data.amount;
+        await this.usersService.updateUserBalance(me.id, giverAmount);
+        await this.usersService.updateUserBalance(user.id, receiverAmount);
         const date = new Date().toUTCString();
-        const message = `Successfully withdrew ${amount} from ${user.number} on ${date}`;
+        const message = `Successfully transferred ${data.amount} from ${me.number} to ${data.number} on ${date}`;
         await this.historyService.insertHistory(user.email, message);
         res.send(true);
     }
 };
-exports.WithdrawController = WithdrawController;
+exports.TransferController = TransferController;
 __decorate([
-    (0, common_1.UsePipes)(new common_1.ValidationPipe()),
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
-    __param(1, (0, common_1.Res)()),
+    __param(1, (0, common_1.Req)()),
+    __param(2, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [withdraw_dto_1.withdrawMoneyDto, Object]),
+    __metadata("design:paramtypes", [transfer_dto_1.transferDto, Object, Object]),
     __metadata("design:returntype", Promise)
-], WithdrawController.prototype, "doWithdraw", null);
-exports.WithdrawController = WithdrawController = __decorate([
-    (0, common_1.Controller)('withdraw'),
+], TransferController.prototype, "transferMoney", null);
+exports.TransferController = TransferController = __decorate([
+    (0, common_1.Controller)('transfer'),
     __metadata("design:paramtypes", [users_service_1.UsersService,
-        history_service_1.HistoryService,
-        user_resolver_1.UserResolver])
-], WithdrawController);
-//# sourceMappingURL=withdraw.controller.js.map
+        user_resolver_1.UserResolver,
+        history_service_1.HistoryService])
+], TransferController);
+//# sourceMappingURL=transfer.controller.js.map

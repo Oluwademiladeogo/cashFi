@@ -10,23 +10,30 @@ exports.HistoryService = void 0;
 const common_1 = require("@nestjs/common");
 const userschema_1 = require("../../../models/userschema");
 let HistoryService = class HistoryService {
-    async getHistory(id) {
-        const user = await userschema_1.userModel.findOne({ id: id });
-        if (!user)
-            throw new common_1.HttpException("User not found", common_1.HttpStatus.BAD_REQUEST);
-        return user.history;
-    }
-    async insertHistory(id, message) {
+    async getHistory(email) {
         try {
-            const user = await userschema_1.userModel.findOne({ id: id });
+            const user = await userschema_1.userModel.findOne({ email: email });
+            if (!user)
+                throw new common_1.HttpException('User not found', common_1.HttpStatus.BAD_REQUEST);
+            return user.history;
+        }
+        catch (error) {
+            throw new common_1.HttpException('Error getting user details', common_1.HttpStatus.BAD_REQUEST);
+        }
+    }
+    async insertHistory(email, message) {
+        try {
+            const user = await userschema_1.userModel.findOne({ email: email });
+            if (!user)
+                throw new common_1.HttpException('User not found', common_1.HttpStatus.BAD_REQUEST);
             const history = user.history;
             history.push(message);
             user.history = history;
             await user.save();
-            return 'done';
+            return true;
         }
         catch (error) {
-            return error;
+            throw new common_1.HttpException('Error with history', common_1.HttpStatus.EXPECTATION_FAILED);
         }
     }
 };

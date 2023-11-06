@@ -25,6 +25,9 @@ let UserResolver = class UserResolver {
     async getUser(email) {
         return await this.UserService.getUser(email);
     }
+    async getUserByNumber(number) {
+        return await this.UserService.getUserByNumber(number);
+    }
     async updateUserBalance(userId, amount) {
         return await this.UserService.updateUserBalance(userId, amount);
     }
@@ -43,6 +46,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "getUser", null);
+__decorate([
+    (0, graphql_1.Query)(),
+    __param(0, (0, graphql_1.Args)('number')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "getUserByNumber", null);
 __decorate([
     (0, graphql_1.Mutation)(),
     __param(0, (0, graphql_1.Args)("userId")),

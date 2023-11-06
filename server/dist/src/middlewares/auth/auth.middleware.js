@@ -9,15 +9,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthMiddleware = void 0;
 const common_1 = require("@nestjs/common");
 const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+dotenv.config();
 let AuthMiddleware = class AuthMiddleware {
     use(req, res, next) {
         if (!req.headers.authorization)
             throw new common_1.HttpException("Unauthorised", common_1.HttpStatus.UNAUTHORIZED);
         const bearerToken = req.headers.authorization?.split(' ')[1];
-        const { error } = jwt.verify(bearerToken, process.env.JWT_SECRET);
-        if (error)
-            throw new common_1.HttpException("Unauthorised", common_1.HttpStatus.UNAUTHORIZED);
         next();
+        try {
+            const token = jwt.verify(bearerToken, process.env.JWT_SECRET);
+            return token;
+        }
+        catch (error) {
+            throw new common_1.HttpException("Unauthorised", common_1.HttpStatus.UNAUTHORIZED);
+        }
     }
 };
 exports.AuthMiddleware = AuthMiddleware;

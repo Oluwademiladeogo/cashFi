@@ -15,21 +15,23 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.LoginController = void 0;
 const common_1 = require("@nestjs/common");
 const login_dto_1 = require("../dtos/login.dto");
-const users_service_1 = require("../../../services/users/users.service");
 const auth_helper_1 = require("../../../helpers/auth.helper");
+const user_resolver_1 = require("../../../resolver/user/user.resolver");
 let LoginController = class LoginController {
-    constructor(UserService) {
-        this.UserService = UserService;
+    constructor(UserResolver) {
+        this.UserResolver = UserResolver;
     }
     async loginUser(user, res) {
-        const dbRes = await this.UserService.getUser(user.email);
+        const dbRes = await this.UserResolver.getUser(user.email);
         const dbUser = {
             username: dbRes.username,
             email: dbRes.email,
-            number: dbRes.number
+            number: dbRes.number,
         };
         const token = await (0, auth_helper_1.generateToken)(dbUser);
-        res.send("Done");
+        res.header('Authorization', `Bearer ${token}`);
+        res.header('Content-Type', 'application/json');
+        res.status(200).send(true);
     }
 };
 exports.LoginController = LoginController;
@@ -44,6 +46,7 @@ __decorate([
 ], LoginController.prototype, "loginUser", null);
 exports.LoginController = LoginController = __decorate([
     (0, common_1.Controller)('login'),
-    __metadata("design:paramtypes", [users_service_1.UsersService])
+    __param(0, (0, common_1.Inject)(user_resolver_1.UserResolver)),
+    __metadata("design:paramtypes", [user_resolver_1.UserResolver])
 ], LoginController);
 //# sourceMappingURL=login.controller.js.map

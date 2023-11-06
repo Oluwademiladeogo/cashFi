@@ -14,27 +14,35 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HistoryController = void 0;
 const common_1 = require("@nestjs/common");
-const history_dto_1 = require("../dtos/history.dto");
-const history_service_1 = require("../../../services/history/history.service");
+const auth_helper_1 = require("../../../helpers/auth.helper");
+const history_resolver_1 = require("../../../resolver/history/history.resolver");
 let HistoryController = class HistoryController {
-    constructor(HistoryService) {
-        this.HistoryService = HistoryService;
+    constructor(HistoryResolver) {
+        this.HistoryResolver = HistoryResolver;
     }
-    async getUserHistory(user, res) {
-        const history = await this.HistoryService.getHistory(user.id);
-        res.send(history);
+    async getUserHistory(req, res) {
+        const token = await (0, auth_helper_1.getToken)(req, res);
+        const payload = await (0, auth_helper_1.getTokenPayload)(token);
+        const history = await this.HistoryResolver.getHistory(payload.email);
+        if (history[0]) {
+            res.status(200).send(history);
+        }
+        else {
+            res.status(200).send('Nothing in history');
+        }
     }
 };
 exports.HistoryController = HistoryController;
 __decorate([
     (0, common_1.Get)(),
-    __param(0, (0, common_1.Body)()),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [history_dto_1.historyDto, Object]),
+    __metadata("design:paramtypes", [Request, Object]),
     __metadata("design:returntype", Promise)
 ], HistoryController.prototype, "getUserHistory", null);
 exports.HistoryController = HistoryController = __decorate([
     (0, common_1.Controller)('history'),
-    __metadata("design:paramtypes", [history_service_1.HistoryService])
+    __metadata("design:paramtypes", [history_resolver_1.HistoryResolver])
 ], HistoryController);
 //# sourceMappingURL=history.controller.js.map

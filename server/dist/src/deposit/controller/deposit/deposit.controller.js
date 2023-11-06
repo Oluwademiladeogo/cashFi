@@ -15,19 +15,23 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DepositController = void 0;
 const common_1 = require("@nestjs/common");
 const deposit_dto_1 = require("../dtos/deposit.dto");
-const deposit_service_1 = require("../../../services/deposit/deposit.service");
-const history_service_1 = require("../../../services/history/history.service");
+const history_resolver_1 = require("../../../resolver/history/history.resolver");
+const deposit_resolver_1 = require("../../../resolver/deposit/deposit.resolver");
+const user_resolver_1 = require("../../../resolver/user/user.resolver");
 let DepositController = class DepositController {
-    constructor(depositService, HistoryService) {
-        this.depositService = depositService;
-        this.HistoryService = HistoryService;
+    constructor(depositResolver, HistoryResolver, UserResolver) {
+        this.depositResolver = depositResolver;
+        this.HistoryResolver = HistoryResolver;
+        this.UserResolver = UserResolver;
     }
     async depositMoney(data, res) {
-        const id = '';
-        await this.depositService.depositData(data);
-        const message = "";
-        await this.HistoryService.insertHistory(id, message);
-        res.send("Done");
+        const user = await this.UserResolver.getUserByNumber(data.number);
+        const email = user.email;
+        await this.depositResolver.depositData(data);
+        const date = new Date().toUTCString();
+        const message = `Successfully deposited ${data.amount} in ${user.number} on ${date}`;
+        await this.HistoryResolver.insertHistory(email, message);
+        res.status(201).send(true);
     }
 };
 exports.DepositController = DepositController;
@@ -35,12 +39,15 @@ __decorate([
     (0, common_1.Post)(),
     (0, common_1.UsePipes)(new common_1.ValidationPipe()),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [deposit_dto_1.depositDto, Object]),
     __metadata("design:returntype", Promise)
 ], DepositController.prototype, "depositMoney", null);
 exports.DepositController = DepositController = __decorate([
     (0, common_1.Controller)('deposit'),
-    __metadata("design:paramtypes", [deposit_service_1.DepositService, history_service_1.HistoryService])
+    __metadata("design:paramtypes", [deposit_resolver_1.DepositResolver,
+        history_resolver_1.HistoryResolver,
+        user_resolver_1.UserResolver])
 ], DepositController);
 //# sourceMappingURL=deposit.controller.js.map

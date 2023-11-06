@@ -1,8 +1,7 @@
-import { loginDto } from '../dtos/login.dto';
 import { Response } from 'express';
 import { UserResolver } from 'src/resolver/user/user.resolver';
-export declare class LoginController {
+export declare class DashboardController {
     private UserResolver;
     constructor(UserResolver: UserResolver);
-    loginUser(user: loginDto, res: Response): Promise<void>;
+    getDashboard(req: Request, res: Response): Promise<void>;
 }

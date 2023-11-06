@@ -12,29 +12,52 @@ const auth_helper_1 = require("../../helpers/auth.helper");
 const userschema_1 = require("../../../models/userschema");
 let UsersService = class UsersService {
     async newUser(user) {
-        const passwordData = await (0, auth_helper_1.encrypt)(user.password);
-        const pinData = await (0, auth_helper_1.encrypt)(user.pin);
-        const createUser = new userschema_1.userModel({
-            username: user.username,
-            email: user.email,
-            number: user.number,
-            pin: pinData.result,
-            pinSalt: pinData.salt,
-            password: passwordData.result,
-            passwordSalt: passwordData.salt,
-            balance: 0,
-        });
-        await createUser.save();
+        try {
+            const passwordData = await (0, auth_helper_1.encrypt)(user.password);
+            const pinData = await (0, auth_helper_1.encrypt)(user.pin);
+            const createUser = new userschema_1.userModel({
+                username: user.username,
+                email: user.email,
+                number: user.number,
+                pin: pinData.result,
+                pinSalt: pinData.salt,
+                password: passwordData.result,
+                passwordSalt: passwordData.salt,
+                balance: 0,
+            });
+            await createUser.save();
+        }
+        catch (error) {
+            throw new common_1.HttpException('Error adding user', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     async getUser(email) {
-        return await userschema_1.userModel.findOne({ email: email });
+        try {
+            return await userschema_1.userModel.findOne({ email: email });
+        }
+        catch (error) {
+            throw new common_1.HttpException('Error getting user details', common_1.HttpStatus.BAD_REQUEST);
+        }
+    }
+    async getUserByNumber(number) {
+        try {
+            return await userschema_1.userModel.findOne({ number: number });
+        }
+        catch (error) {
+            throw new common_1.HttpException('Error getting user details', common_1.HttpStatus.BAD_REQUEST);
+        }
     }
     async updateUserBalance(userId, amount) {
-        const user = await userschema_1.userModel.findById(userId);
-        if (!user)
-            throw new common_1.HttpException('Error querying db', common_1.HttpStatus.EXPECTATION_FAILED);
-        user.balance = amount;
-        await user.save();
+        try {
+            const user = await userschema_1.userModel.findById(userId);
+            if (!user)
+                throw new common_1.HttpException('Error querying db', common_1.HttpStatus.EXPECTATION_FAILED);
+            user.balance = amount;
+            await user.save();
+        }
+        catch (error) {
+            throw new common_1.HttpException('Error updating user details', common_1.HttpStatus.BAD_REQUEST);
+        }
     }
 };
 exports.UsersService = UsersService;

@@ -1,8 +1,7 @@
 import { Response } from 'express';
-import { historyDto } from 'src/history/controller/dtos/history.dto';
-import { HistoryService } from 'src/services/history/history.service';
+import { HistoryResolver } from 'src/resolver/history/history.resolver';
 export declare class HistoryController {
-    private HistoryService;
-    constructor(HistoryService: HistoryService);
-    getUserHistory(user: historyDto, res: Response): Promise<void>;
+    private HistoryResolver;
+    constructor(HistoryResolver: HistoryResolver);
+    getUserHistory(req: Request, res: Response): Promise<void>;
 }

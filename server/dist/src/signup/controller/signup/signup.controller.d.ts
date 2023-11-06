@@ -1,8 +1,8 @@
 import { NewUserDto } from './dtos/NewUser.dto';
-import { UsersService } from 'src/services/users/users.service';
 import { Response } from 'express';
+import { UserResolver } from 'src/resolver/user/user.resolver';
 export declare class SignupController {
-    private UsersService;
-    constructor(UsersService: UsersService);
+    private UsersResolver;
+    constructor(UsersResolver: UserResolver);
     SignupUser(user: NewUserDto, res: Response): Promise<void>;
 }

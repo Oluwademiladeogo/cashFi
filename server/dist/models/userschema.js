@@ -21,6 +21,7 @@ const userModel = mongoose.model('users', new mongoose.Schema({
         minlength: 5,
         maxlength: 20,
         required: true,
+        unique: true,
     },
     password: {
         type: String,
@@ -46,7 +47,7 @@ const userModel = mongoose.model('users', new mongoose.Schema({
         type: Number,
         required: true,
     },
-    history: [String]
+    history: [String, Object],
 }));
 exports.userModel = userModel;
 //# sourceMappingURL=userschema.js.map

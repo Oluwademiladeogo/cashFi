@@ -1,1 +1,1 @@
-{"version":3,"file":"deposit.dto.js","sourceRoot":"","sources":["../../../../../src/deposit/controller/dtos/deposit.dto.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA,qDAAoD;AAEpD,MAAa,UAAU;CAKtB;AALD,gCAKC;AAHC;IADC,IAAA,0BAAQ,GAAE;;iDACW;AAEtB;IADC,IAAA,0BAAQ,GAAE;;0CACI"}
+{"version":3,"file":"deposit.dto.js","sourceRoot":"","sources":["../../../../../src/deposit/controller/dtos/deposit.dto.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA,qDAAoD;AAEpD,MAAa,UAAU;CAKtB;AALD,gCAKC;AAHC;IADC,IAAA,0BAAQ,GAAE;;0CACI;AAEf;IADC,IAAA,0BAAQ,GAAE;;0CACI"}

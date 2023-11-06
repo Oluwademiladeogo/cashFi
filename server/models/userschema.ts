@@ -1,15 +1,15 @@
 import * as mongoose from 'mongoose';
 
 interface users {
-  username:string,
-  email:string,
-  number:number,
-  password:string,
-  passwordSalt:string,
-  pin:string,
-  pinSalt:string,
-  balance:number,
-  history:[string],
+  username: string;
+  email: string;
+  number: number;
+  password: string;
+  passwordSalt: string;
+  pin: string;
+  pinSalt: string;
+  balance: number;
+  history: [string];
 }
 const userModel = mongoose.model<users>(
   'users',
@@ -25,13 +25,14 @@ const userModel = mongoose.model<users>(
       unique: true,
       minlength: 5,
       maxlength: 255,
-      required: true, 
+      required: true,
     },
     number: {
       type: Number,
       minlength: 5,
       maxlength: 20,
       required: true,
+      unique: true,
     },
     password: {
       type: String,
@@ -43,21 +44,21 @@ const userModel = mongoose.model<users>(
       type: String,
       required: true,
     },
-    pin:{
-        type: String,
+    pin: {
+      type: String,
       minlength: 5,
       maxlength: 1024,
       required: true,
     },
     pinSalt: {
-        type: String,
-        required: true,
-      },
+      type: String,
+      required: true,
+    },
     balance: {
       type: Number,
       required: true,
     },
-    history: [String]
+    history: [String, Object],
   }),
 );
 export { userModel, users };

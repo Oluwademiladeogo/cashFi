@@ -19,24 +19,24 @@ let HistoryResolver = class HistoryResolver {
     constructor(HistoryService) {
         this.HistoryService = HistoryService;
     }
-    async getHistory(id) {
-        return await this.HistoryService.getHistory(id);
+    async getHistory(email) {
+        return await this.HistoryService.getHistory(email);
     }
-    async insertHistory(id, message) {
-        return await this.HistoryService.insertHistory(id, message);
+    async insertHistory(email, message) {
+        return await this.HistoryService.insertHistory(email, message);
     }
 };
 exports.HistoryResolver = HistoryResolver;
 __decorate([
     (0, graphql_1.Query)(),
-    __param(0, (0, graphql_1.Args)('id')),
+    __param(0, (0, graphql_1.Args)('email')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], HistoryResolver.prototype, "getHistory", null);
 __decorate([
     (0, graphql_1.Mutation)(),
-    __param(0, (0, graphql_1.Args)('id')),
+    __param(0, (0, graphql_1.Args)('email')),
     __param(1, (0, graphql_1.Args)('message')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, String]),

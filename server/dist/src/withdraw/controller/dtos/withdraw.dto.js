@@ -15,20 +15,12 @@ class withdrawMoneyDto {
 }
 exports.withdrawMoneyDto = withdrawMoneyDto;
 __decorate([
-    (0, class_validator_1.IsEmail)(),
-    __metadata("design:type", String)
-], withdrawMoneyDto.prototype, "email", void 0);
-__decorate([
-    (0, class_validator_1.IsAlpha)(),
-    __metadata("design:type", String)
-], withdrawMoneyDto.prototype, "bankName", void 0);
-__decorate([
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
-], withdrawMoneyDto.prototype, "accountNumber", void 0);
+], withdrawMoneyDto.prototype, "number", void 0);
 __decorate([
-    (0, class_validator_1.IsNumber)(),
-    __metadata("design:type", Number)
+    (0, class_validator_1.Length)(6, 6),
+    __metadata("design:type", String)
 ], withdrawMoneyDto.prototype, "pin", void 0);
 __decorate([
     (0, class_validator_1.IsNumber)(),

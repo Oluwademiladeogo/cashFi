@@ -11,6 +11,7 @@ const common_1 = require("@nestjs/common");
 const users_service_1 = require("../services/users/users.service");
 const signup_controller_1 = require("./controller/signup/signup.controller");
 const auth_middleware_1 = require("../middlewares/auth/auth.middleware");
+const user_resolver_1 = require("../resolver/user/user.resolver");
 let SignupModule = class SignupModule {
     configure(consumer) {
         consumer.apply(auth_middleware_1.AuthMiddleware).forRoutes({
@@ -23,7 +24,7 @@ exports.SignupModule = SignupModule;
 exports.SignupModule = SignupModule = __decorate([
     (0, common_1.Module)({
         controllers: [signup_controller_1.SignupController],
-        providers: [users_service_1.UsersService],
+        providers: [users_service_1.UsersService, user_resolver_1.UserResolver],
     })
 ], SignupModule);
 //# sourceMappingURL=signup.module.js.map

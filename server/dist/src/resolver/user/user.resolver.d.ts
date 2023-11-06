@@ -31,5 +31,8 @@ export declare class UserResolver {
     getUser(email: string): Promise<import("mongoose").Document<unknown, {}, import("../../../models/userschema").users> & import("../../../models/userschema").users & {
         _id: import("mongoose").Types.ObjectId;
     }>;
+    getUserByNumber(number: number): Promise<import("mongoose").Document<unknown, {}, import("../../../models/userschema").users> & import("../../../models/userschema").users & {
+        _id: import("mongoose").Types.ObjectId;
+    }>;
     updateUserBalance(userId: string, amount: number): Promise<void>;
 }

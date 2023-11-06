@@ -15,15 +15,11 @@ class NewUserDto {
 }
 exports.NewUserDto = NewUserDto;
 __decorate([
-    (0, class_validator_1.IsAlpha)(),
-    __metadata("design:type", String)
-], NewUserDto.prototype, "username", void 0);
-__decorate([
     (0, class_validator_1.IsEmail)(),
     __metadata("design:type", String)
 ], NewUserDto.prototype, "email", void 0);
 __decorate([
-    (0, class_validator_1.IsPhoneNumber)("NG"),
+    (0, class_validator_1.IsPhoneNumber)('NG'),
     __metadata("design:type", Number)
 ], NewUserDto.prototype, "number", void 0);
 __decorate([
@@ -31,7 +27,13 @@ __decorate([
     __metadata("design:type", String)
 ], NewUserDto.prototype, "password", void 0);
 __decorate([
-    (0, class_validator_1.IsNumber)(),
-    __metadata("design:type", Number)
+    (0, class_validator_1.Length)(6, 6),
+    __metadata("design:type", String)
 ], NewUserDto.prototype, "pin", void 0);
+__decorate([
+    (0, class_validator_1.Matches)(/^(?=[A-Za-z])([A-Za-z]+\s?)*$/, {
+        message: 'Username must be alphabetic with optional spaces.',
+    }),
+    __metadata("design:type", String)
+], NewUserDto.prototype, "username", void 0);
 //# sourceMappingURL=NewUser.dto.js.map

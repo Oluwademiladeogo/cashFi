@@ -4,6 +4,7 @@ import {
   HttpException,
   HttpStatus,
   Post,
+  Res,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -12,26 +13,30 @@ import { withdrawMoneyDto } from '../dtos/withdraw.dto';
 import { UsersService } from 'src/services/users/users.service';
 import { HistoryService } from 'src/services/history/history.service';
 import { compare } from 'src/helpers/auth.helper';
+import { UserResolver } from 'src/resolver/user/user.resolver';
 
 @Controller('withdraw')
 export class WithdrawController {
   constructor(
     private usersService: UsersService,
     private historyService: HistoryService,
+    private userResolver: UserResolver,
   ) {}
   @UsePipes(new ValidationPipe())
   @Post()
-  async doWithdraw(@Body() res: Response, data: withdrawMoneyDto) {
-    const user = await this.usersService.getUser(data.email);
-    if (!user) return res.json('User not found');
+  async doWithdraw(@Body() data: withdrawMoneyDto, @Res() res: Response) {
+    const user = await this.userResolver.getUserByNumber(data.number);
     const result = await compare(data.pin, user.pin);
-    if (result) throw new HttpException('Invalid pin', HttpStatus.BAD_REQUEST);
+    if (!result) throw new HttpException('Invalid pin', HttpStatus.BAD_REQUEST);
     const aggBal = user.balance + 1000;
     if (data.amount > aggBal)
       throw new HttpException('insufficient funds', HttpStatus.BAD_REQUEST);
-    const amount = data.amount - user.balance;
+    const amount = user.balance - data.amount;
     await this.usersService.updateUserBalance(user.id, amount);
-    const message = '';
-    await this.historyService.insertHistory(user.id, message);
+    const date = new Date().toUTCString();
+   const message = `Successfully withdrew ${amount} from ${user.number} on ${date}`;
+
+    await this.historyService.insertHistory(user.email, message);
+    res.status(200).send(true);
   }
 }

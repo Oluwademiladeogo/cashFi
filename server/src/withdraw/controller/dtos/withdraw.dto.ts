@@ -1,14 +1,10 @@
-import { IsAlpha, IsEmail, IsNumber} from "class-validator";
+import { IsNumber, Length} from "class-validator";
 
 export class withdrawMoneyDto{
-    @IsEmail()
-    email:string
-    @IsAlpha()
-    bankName:string
     @IsNumber()
-    accountNumber:number
-    @IsNumber()
-    pin:number
+    number:number
+    @Length(6, 6)
+    pin: string;
     @IsNumber()
     amount:number
-}    //make custon class validator isbank
+}   

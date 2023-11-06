@@ -1,93 +1,89 @@
-import './Signup.css';
+import React from "react";
+import "./Signup.css";
+
 const Signup = () => {
+  const [username, setName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [number, setNumber] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [pin, setPin] = React.useState("");
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const response = await fetch("http://localhost:3000/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username,
+        email,
+        number,
+        password,
+        pin,
+      }),
+    });
+
+    if (response.status === 200) {
+      // Signup successful
+    } else {
+      // Signup failed
+    }
+  };
+
   return (
-    <>
-      <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      />
-      {/* <link rel="icon" type="image/x-icon" href="/images/favicon.ico" /> */}
-
-      <title>SIGNUP</title>
-
-      <div className="text-center">
-        <main className="form-signin w-100 m-auto">
-          <form action="/signup" className="form-signin" method="POST">
-            <img
-              className="mb-4"
-              src="logo.png"
-              alt=""
-              width="72"
-              height="57"
-            />
-            <h1 className="h4 mb-3 fw-normal">Signup!</h1>
-            <div className="form-floating top">
-              <input
-                type="text"
-                name="name"
-                className="form-control"
-                pattern="^[A-Za-z\s]+$"
-                title="Must be a string"
-                placeholder="name"
-                required
-                autoFocus
-              />
-              <label htmlFor="floatingInput">Name</label>
-            </div>
-            <div className="form-floating middle">
-              <input
-                type="email"
-                name="email"
-                className="form-control"
-                placeholder="name@example.com"
-                required
-              />
-              <label htmlFor="floatingInput">Email address</label>
-            </div>
-            <div className="form-floating bottom">
-              <input
-                type="password"
-                name="password"
-                className="form-control"
-                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                title="Min 8, number, upper and lowercase letters"
-                placeholder="password"
-                required
-              />
-              <div className="form-floating bottom">
-              <input
-                type="number"
-                name="phone"
-                className="form-control"
-                pattern="[0-9]{11}"
-                title="Enter a valid number"
-                placeholder="Phone Number"
-                required
-              />
-              <label htmlFor="floatingInput">Phone Number</label>
-            </div>
-              <label htmlFor="floatingInput">password</label>
-            </div>
-            <button className="w-100 btn btn-lg btn-primary" type="submit">
-              Sign up
-            </button>
-            <p className="mt-5 mb-3 text-muted">Already have an account?</p>
-
-            <div className="column">
-              <a
-                href="/login"
-                className="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
-              >
-                Login
-              </a>
-              <br />
-            </div>
-
-            <p className="mt-5 mb-3 text-muted">&copy; Bickersteth 2023</p>
-          </form>
-        </main>
-      </div>
-    </>
+    <div className="signup-page">
+      <form className="signup-form" onSubmit={handleSubmit}>
+        <h1 className="title">CashFI</h1>
+        <div className="form-input">
+          <input
+            className="name"
+            type="text"
+            placeholder="Full Name"
+            name="username"
+            onChange={(e) => setName(e.target.value)}
+          />
+          <input
+            className="input email"
+            type="email"
+            placeholder="email"
+            name="email"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            className="number"
+            placeholder="Phone Number"
+            name="number"
+            onChange={(e) => setNumber(e.target.value)}
+          />
+          <input
+            className="input password"
+            type="password"
+            placeholder="password"
+            name="password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <input
+            className="input pin"
+            type="pin"
+            placeholder="pin"
+            name="pin"
+            onChange={(e) => setPin(e.target.value)}
+          />
+        </div>
+        <div>
+          <button>sign up</button>
+          <div className="grid">
+            <p className="haveText ">Already have an account?</p>
+            <a href="/login" className="login">
+              login
+            </a>
+          </div>
+        </div>
+      </form>
+    </div>
   );
 };
+
 export default Signup;

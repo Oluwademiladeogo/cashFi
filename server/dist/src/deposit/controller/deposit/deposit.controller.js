@@ -31,7 +31,7 @@ let DepositController = class DepositController {
         const date = new Date().toUTCString();
         const message = `Successfully deposited ${data.amount} in ${user.number} on ${date}`;
         await this.HistoryResolver.insertHistory(email, message);
-        res.status(201).send(true);
+        res.status(200).send(true);
     }
 };
 exports.DepositController = DepositController;

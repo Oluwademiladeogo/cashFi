@@ -26,12 +26,10 @@ let TransferController = class TransferController {
         this.historyService = historyService;
     }
     async transferMoney(data, req, res) {
-        const token = await (0, auth_helper_1.getToken)(req, res);
+        const token = await (0, auth_helper_1.getToken)(req);
         const payload = await (0, auth_helper_1.getTokenPayload)(token);
         const me = await this.userResolver.getUser(payload.email);
         const user = await this.userResolver.getUserByNumber(data.number);
-        if (!user)
-            return res.json('User not found');
         const result = await (0, auth_helper_1.compare)(data.pin, user.pin);
         if (!result)
             throw new common_1.HttpException('Invalid pin', common_1.HttpStatus.BAD_REQUEST);

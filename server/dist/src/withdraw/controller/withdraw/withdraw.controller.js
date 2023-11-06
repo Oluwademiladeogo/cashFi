@@ -27,8 +27,6 @@ let WithdrawController = class WithdrawController {
     }
     async doWithdraw(data, res) {
         const user = await this.userResolver.getUserByNumber(data.number);
-        if (!user)
-            return res.json('User not found');
         const result = await (0, auth_helper_1.compare)(data.pin, user.pin);
         if (!result)
             throw new common_1.HttpException('Invalid pin', common_1.HttpStatus.BAD_REQUEST);
@@ -40,7 +38,7 @@ let WithdrawController = class WithdrawController {
         const date = new Date().toUTCString();
         const message = `Successfully withdrew ${amount} from ${user.number} on ${date}`;
         await this.historyService.insertHistory(user.email, message);
-        res.send(true);
+        res.status(200).send(true);
     }
 };
 exports.WithdrawController = WithdrawController;

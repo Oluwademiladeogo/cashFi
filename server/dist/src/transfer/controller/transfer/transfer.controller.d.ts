@@ -8,5 +8,5 @@ export declare class TransferController {
     private userResolver;
     private historyService;
     constructor(usersService: UsersService, userResolver: UserResolver, historyService: HistoryService);
-    transferMoney(data: transferDto, req: Request, res: Response): Promise<Response<any, Record<string, any>>>;
+    transferMoney(data: transferDto, req: Request, res: Response): Promise<void>;
 }

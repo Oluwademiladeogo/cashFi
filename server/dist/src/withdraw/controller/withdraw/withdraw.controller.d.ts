@@ -8,5 +8,5 @@ export declare class WithdrawController {
     private historyService;
     private userResolver;
     constructor(usersService: UsersService, historyService: HistoryService, userResolver: UserResolver);
-    doWithdraw(data: withdrawMoneyDto, res: Response): Promise<Response<any, Record<string, any>>>;
+    doWithdraw(data: withdrawMoneyDto, res: Response): Promise<void>;
 }

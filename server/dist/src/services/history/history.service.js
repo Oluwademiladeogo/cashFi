@@ -14,7 +14,7 @@ let HistoryService = class HistoryService {
         try {
             const user = await userschema_1.userModel.findOne({ email: email });
             if (!user)
-                throw new common_1.HttpException('User not found', common_1.HttpStatus.BAD_REQUEST);
+                throw new common_1.HttpException('Error getting user details', common_1.HttpStatus.BAD_REQUEST);
             return user.history;
         }
         catch (error) {
@@ -25,7 +25,7 @@ let HistoryService = class HistoryService {
         try {
             const user = await userschema_1.userModel.findOne({ email: email });
             if (!user)
-                throw new common_1.HttpException('User not found', common_1.HttpStatus.BAD_REQUEST);
+                throw new common_1.HttpException('Error getting user details', common_1.HttpStatus.BAD_REQUEST);
             const history = user.history;
             history.push(message);
             user.history = history;
@@ -33,7 +33,7 @@ let HistoryService = class HistoryService {
             return true;
         }
         catch (error) {
-            throw new common_1.HttpException('Error with history', common_1.HttpStatus.EXPECTATION_FAILED);
+            throw new common_1.HttpException('Error with history', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 };

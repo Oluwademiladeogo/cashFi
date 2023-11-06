@@ -21,7 +21,7 @@ let DashboardController = class DashboardController {
         this.UserResolver = UserResolver;
     }
     async getDashboard(req, res) {
-        const bearerToken = await (0, auth_helper_1.getToken)(req, res);
+        const bearerToken = await (0, auth_helper_1.getToken)(req);
         const payload = await (0, auth_helper_1.getTokenPayload)(bearerToken);
         const response = await this.UserResolver.getUser(payload.email);
         if (response)

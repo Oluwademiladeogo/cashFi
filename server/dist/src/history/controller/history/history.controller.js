@@ -21,7 +21,7 @@ let HistoryController = class HistoryController {
         this.HistoryResolver = HistoryResolver;
     }
     async getUserHistory(req, res) {
-        const token = await (0, auth_helper_1.getToken)(req, res);
+        const token = await (0, auth_helper_1.getToken)(req);
         const payload = await (0, auth_helper_1.getTokenPayload)(token);
         const history = await this.HistoryResolver.getHistory(payload.email);
         if (history[0]) {

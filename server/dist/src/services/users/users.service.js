@@ -28,7 +28,7 @@ let UsersService = class UsersService {
             await createUser.save();
         }
         catch (error) {
-            throw new common_1.HttpException('Error adding user', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new common_1.HttpException('Internal server error', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     async getUser(email) {
@@ -51,12 +51,12 @@ let UsersService = class UsersService {
         try {
             const user = await userschema_1.userModel.findById(userId);
             if (!user)
-                throw new common_1.HttpException('Error querying db', common_1.HttpStatus.EXPECTATION_FAILED);
+                throw new common_1.HttpException('Internal server error', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
             user.balance = amount;
             await user.save();
         }
         catch (error) {
-            throw new common_1.HttpException('Error updating user details', common_1.HttpStatus.BAD_REQUEST);
+            throw new common_1.HttpException('Internal server error', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 };

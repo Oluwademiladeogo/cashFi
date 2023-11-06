@@ -29,6 +29,8 @@ let LoginController = class LoginController {
             number: dbRes.number,
         };
         const token = await (0, auth_helper_1.generateToken)(dbUser);
+        if (!token)
+            throw new common_1.HttpException('Error with authorisation', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
         res.header('Authorization', `Bearer ${token}`);
         res.header('Content-Type', 'application/json');
         res.status(200).send(true);

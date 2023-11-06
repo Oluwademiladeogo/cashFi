@@ -5,14 +5,11 @@ import { HistoryService } from 'src/services/history/history.service';
 export class HistoryResolver {
   constructor(private readonly HistoryService: HistoryService) {}
   @Query()
-  async getHistory(@Args('id') id: string) {
-    return await this.HistoryService.getHistory(id);
+  async getHistory(@Args('email') email: string) {
+    return await this.HistoryService.getHistory(email);
   }
   @Mutation()
-  async insertHistory(
-    @Args('id') id: string,
-    @Args('message') message: string,
-  ) {
-    return await this.HistoryService.insertHistory(id, message);
+  async insertHistory(@Args('email') email: string, @Args('message') message: string) {
+    return await this.HistoryService.insertHistory(email, message);
   }
 }

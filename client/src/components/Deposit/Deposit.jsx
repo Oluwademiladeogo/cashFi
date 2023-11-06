@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import './Deposit.css';
-import Navbar from '../../Navbar/Navbar';
+import Navbar from '../Navbar/Navbar';
 
 const Deposit = () => {
-  const [amount, setAmount] =useState('');
-const [number, setNumber] = useState('')
+  const [amount, setAmount] = useState('');
+  const [number, setNumber] = useState('');
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -14,7 +14,8 @@ const [number, setNumber] = useState('')
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        amount, number
+        amount,
+        number,
       }),
     });
 

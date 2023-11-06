@@ -1,6 +1,6 @@
 import React from 'react';
 import './Transfer.css';
-import Navbar from '../../Navbar/Navbar';
+import Navbar from '../Navbar/Navbar';
 
 const Transfer = () => {
   const [number, setNumber] = React.useState('');

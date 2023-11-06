@@ -12,6 +12,10 @@ export class UserResolver {
     async getUser(@Args('email') email:string){
         return await this.UserService.getUser(email)
     }
+    @Query()
+    async getUserByNumber(@Args('number')number:number){
+        return await this.UserService.getUserByNumber(number)
+    }
     @Mutation()
     async updateUserBalance(@Args("userId") userId:string, @Args("amount") amount:number){
         return await this.UserService.updateUserBalance(userId, amount)

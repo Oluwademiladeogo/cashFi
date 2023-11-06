@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './History.css';
-import Navbar from '../../Navbar/Navbar';
+import Navbar from '../Navbar/Navbar';
 
 const History = () => {
   const [transactions, setTransactions] = useState([

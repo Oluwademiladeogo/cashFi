@@ -1,6 +1,8 @@
 import {
   Body,
   Controller,
+  HttpException,
+  HttpStatus,
   Inject,
   Post,
   Res,
@@ -9,16 +11,12 @@ import {
 } from '@nestjs/common';
 import { loginDto } from '../dtos/login.dto';
 import { Response } from 'express';
-import { UsersService } from 'src/services/users/users.service';
 import { generateToken } from 'src/helpers/auth.helper';
 import { UserResolver } from 'src/resolver/user/user.resolver';
 
 @Controller('login')
 export class LoginController {
-  constructor(
-    private UserService: UsersService,
-    @Inject(UserResolver) private UserResolver: UserResolver,
-  ) {}
+  constructor(@Inject(UserResolver) private UserResolver: UserResolver) {}
   @UsePipes(new ValidationPipe())
   @Post()
   async loginUser(@Body() user: loginDto, @Res() res: Response) {
@@ -30,7 +28,13 @@ export class LoginController {
       number: dbRes.number,
     };
     const token = await generateToken(dbUser);
-    //setheaders
-    res.send('Done');
+    if (!token)
+      throw new HttpException(
+        'Error with authorisation',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    res.header('Authorization', `Bearer ${token}`);
+    res.header('Content-Type', 'application/json');
+    res.status(200).send(true);
   }
 }

@@ -15,11 +15,11 @@ class depositDto {
 }
 exports.depositDto = depositDto;
 __decorate([
-    (0, class_validator_1.IsNumber)(),
-    __metadata("design:type", Number)
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
 ], depositDto.prototype, "number", void 0);
 __decorate([
-    (0, class_validator_1.IsNumber)(),
-    __metadata("design:type", Number)
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
 ], depositDto.prototype, "amount", void 0);
 //# sourceMappingURL=deposit.dto.js.map

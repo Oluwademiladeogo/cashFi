@@ -8,5 +8,5 @@ export declare class DepositController {
     private HistoryResolver;
     private UserResolver;
     constructor(depositResolver: DepositResolver, HistoryResolver: HistoryResolver, UserResolver: UserResolver);
-    depositMoney(data: depositDto, res: Response): Promise<void>;
+    depositMoney(data: depositDto, res: Response): Promise<Response<any, Record<string, any>>>;
 }

@@ -15,15 +15,15 @@ class transferDto {
 }
 exports.transferDto = transferDto;
 __decorate([
-    (0, class_validator_1.IsNumber)(),
-    __metadata("design:type", Number)
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
 ], transferDto.prototype, "number", void 0);
 __decorate([
     (0, class_validator_1.Length)(6, 6),
     __metadata("design:type", String)
 ], transferDto.prototype, "pin", void 0);
 __decorate([
-    (0, class_validator_1.IsNumber)(),
-    __metadata("design:type", Number)
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
 ], transferDto.prototype, "amount", void 0);
 //# sourceMappingURL=transfer.dto.js.map

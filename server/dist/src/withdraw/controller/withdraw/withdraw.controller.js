@@ -25,20 +25,23 @@ let WithdrawController = class WithdrawController {
         this.historyService = historyService;
         this.userResolver = userResolver;
     }
-    async doWithdraw(data, res) {
-        const user = await this.userResolver.getUserByNumber(data.number);
+    async doWithdraw(data, req, res) {
+        const token = await (0, auth_helper_1.getToken)(req);
+        const payload = await (0, auth_helper_1.getTokenPayload)(token);
+        const user = await this.userResolver.getUser(payload.email);
+        const amount = parseInt(data.amount);
         const result = await (0, auth_helper_1.compare)(data.pin, user.pin);
         if (!result)
-            throw new common_1.HttpException('Invalid pin', common_1.HttpStatus.BAD_REQUEST);
+            return res.json({ status: 400, message: 'invalid pin' });
         const aggBal = user.balance + 1000;
-        if (data.amount > aggBal)
-            throw new common_1.HttpException('insufficient funds', common_1.HttpStatus.BAD_REQUEST);
-        const amount = user.balance - data.amount;
+        if (amount > aggBal)
+            return res.json({ status: 400, message: 'insufficient funds' });
+        const newamount = user.balance - amount;
         await this.usersService.updateUserBalance(user.id, amount);
         const date = new Date().toUTCString();
-        const message = `Successfully withdrew ${amount} from ${user.number} on ${date}`;
+        const message = `Successfully withdrew ${newamount} from ${user.number} on ${date}`;
         await this.historyService.insertHistory(user.email, message);
-        res.status(200).send(true);
+        res.json({ status: 200, message: message });
     }
 };
 exports.WithdrawController = WithdrawController;
@@ -46,9 +49,10 @@ __decorate([
     (0, common_1.UsePipes)(new common_1.ValidationPipe()),
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
-    __param(1, (0, common_1.Res)()),
+    __param(1, (0, common_1.Req)()),
+    __param(2, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [withdraw_dto_1.withdrawMoneyDto, Object]),
+    __metadata("design:paramtypes", [withdraw_dto_1.withdrawMoneyDto, Object, Object]),
     __metadata("design:returntype", Promise)
 ], WithdrawController.prototype, "doWithdraw", null);
 exports.WithdrawController = WithdrawController = __decorate([

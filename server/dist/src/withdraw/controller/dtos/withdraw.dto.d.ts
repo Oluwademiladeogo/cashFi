@@ -1,5 +1,5 @@
 export declare class withdrawMoneyDto {
-    number: number;
+    number: string;
     pin: string;
-    amount: number;
+    amount: string;
 }

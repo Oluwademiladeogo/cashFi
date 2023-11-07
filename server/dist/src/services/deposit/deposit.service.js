@@ -11,10 +11,12 @@ const common_1 = require("@nestjs/common");
 const userschema_1 = require("../../../models/userschema");
 let DepositService = class DepositService {
     async depositData(data) {
-        const account = await userschema_1.userModel.findOne({ number: data.number });
+        const num = parseInt(data.number);
+        const amount = parseInt(data.amount);
+        const account = await userschema_1.userModel.findOne({ number: num });
         if (!account)
             throw new common_1.HttpException('Account not found', common_1.HttpStatus.BAD_REQUEST);
-        account.balance += data.amount;
+        account.balance += amount;
         await account.save();
         return true;
     }

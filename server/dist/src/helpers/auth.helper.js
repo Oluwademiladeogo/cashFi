@@ -25,7 +25,12 @@ const encrypt = async (password) => {
 };
 exports.encrypt = encrypt;
 const compare = async (enteredValue, hashedValue) => {
-    return await bcrypt.compare(enteredValue, hashedValue);
+    try {
+        return await bcrypt.compare(enteredValue, hashedValue);
+    }
+    catch (error) {
+        return (false);
+    }
 };
 exports.compare = compare;
 const getToken = async (req) => {
@@ -36,7 +41,7 @@ const getToken = async (req) => {
         return bearerToken;
     }
     catch (error) {
-        throw new common_1.HttpException('Internal Server Error', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        throw new common_1.HttpException('Error getting token', common_1.HttpStatus.UNAUTHORIZED);
     }
 };
 exports.getToken = getToken;
@@ -46,7 +51,7 @@ const getTokenPayload = async (bearerToken) => {
         return payload;
     }
     catch (error) {
-        throw new common_1.HttpException('Internal Server Error', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        throw new common_1.HttpException('Token error', common_1.HttpStatus.UNAUTHORIZED);
     }
 };
 exports.getTokenPayload = getTokenPayload;

@@ -1,4 +1,4 @@
 export declare class depositDto {
-    number: number;
-    amount: number;
+    number: string;
+    amount: string;
 }

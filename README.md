@@ -111,7 +111,7 @@ message: Internal server error
 
 **Headers:**
 
-**authorisation: Bearer Token**
+**authorization: Bearer Token**
 
 **REQUEST:**
 
@@ -146,7 +146,7 @@ message: Internal server error
 
 **Headers:**
 
-**authorisation: Bearer Token**
+**authorization: Bearer Token**
 
 **REQUEST:**
 
@@ -187,7 +187,7 @@ message: Internal server error
 
 **Headers:**
 
-**authorisation: Bearer Token**
+**authorization: Bearer Token**
 
 **REQUEST:**
 
@@ -232,7 +232,7 @@ message: Internal server error
 
 **Headers:**
 
-**authorisation: Bearer Token**
+**authorization: Bearer Token**
 
 **RESPONSE:**
 

@@ -1,5 +1,5 @@
 export declare class transferDto {
-    number: number;
+    number: string;
     pin: string;
-    amount: number;
+    amount: string;
 }

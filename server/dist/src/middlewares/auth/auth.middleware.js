@@ -14,7 +14,7 @@ dotenv.config();
 let AuthMiddleware = class AuthMiddleware {
     use(req, res, next) {
         if (!req.headers.authorization)
-            throw new common_1.HttpException("Unauthorised", common_1.HttpStatus.UNAUTHORIZED);
+            throw new common_1.HttpException('Unauthorised', common_1.HttpStatus.UNAUTHORIZED);
         const bearerToken = req.headers.authorization?.split(' ')[1];
         next();
         try {
@@ -22,7 +22,7 @@ let AuthMiddleware = class AuthMiddleware {
             return token;
         }
         catch (error) {
-            throw new common_1.HttpException("Unauthorised", common_1.HttpStatus.UNAUTHORIZED);
+            throw new common_1.HttpException('Unauthorised', common_1.HttpStatus.UNAUTHORIZED);
         }
     }
 };

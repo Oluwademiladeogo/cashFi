@@ -25,13 +25,22 @@ let DepositController = class DepositController {
         this.UserResolver = UserResolver;
     }
     async depositMoney(data, res) {
-        const user = await this.UserResolver.getUserByNumber(data.number);
+        const numGotten = parseInt(data.number);
+        const user = await this.UserResolver.getUserByNumber(numGotten);
+        if (!user)
+            return res.json({
+                status: 404,
+                message: 'user not found',
+            });
         const email = user.email;
         await this.depositResolver.depositData(data);
         const date = new Date().toUTCString();
         const message = `Successfully deposited ${data.amount} in ${user.number} on ${date}`;
         await this.HistoryResolver.insertHistory(email, message);
-        res.status(200).send(true);
+        res.json({
+            status: 200,
+            message: message,
+        });
     }
 };
 exports.DepositController = DepositController;

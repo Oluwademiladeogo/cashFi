@@ -1,4 +1,4 @@
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { withdrawMoneyDto } from '../dtos/withdraw.dto';
 import { UsersService } from 'src/services/users/users.service';
 import { HistoryService } from 'src/services/history/history.service';
@@ -8,5 +8,5 @@ export declare class WithdrawController {
     private historyService;
     private userResolver;
     constructor(usersService: UsersService, historyService: HistoryService, userResolver: UserResolver);
-    doWithdraw(data: withdrawMoneyDto, res: Response): Promise<void>;
+    doWithdraw(data: withdrawMoneyDto, req: Request, res: Response): Promise<Response<any, Record<string, any>>>;
 }

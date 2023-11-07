@@ -30,11 +30,9 @@ export class LoginController {
     const token = await generateToken(dbUser);
     if (!token)
       throw new HttpException(
-        'Error with authorisation',
+        'Error with authorization',
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
-    res.header('Authorization', `Bearer ${token}`);
-    res.header('Content-Type', 'application/json');
-    res.status(200).send(true);
+    res.json({ status: 200, message: true, client_token: token });
   }
 }

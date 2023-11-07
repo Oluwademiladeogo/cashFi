@@ -10,7 +10,7 @@ export class NewUserDto {
   @IsEmail()
   email: string;
   @IsPhoneNumber('NG')
-  number: number;
+  number: string;
   @IsStrongPassword()
   password: string;
   @Length(6, 6)

@@ -6,7 +6,7 @@ export class HistoryService {
     try {
       const user = await userModel.findOne({ email: email });
       if (!user)
-        throw new HttpException('Error getting user details', HttpStatus.BAD_REQUEST);
+        return false;
       return user.history;
     } catch (error) {
       throw new HttpException(

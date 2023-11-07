@@ -1,8 +1,6 @@
 import {
   Body,
   Controller,
-  HttpException,
-  HttpStatus,
   Post,
   Res,
   UsePipes,
@@ -19,8 +17,8 @@ export class SignupController {
   async SignupUser(@Body() user: NewUserDto, @Res() res: Response) {
     const userObject = await this.UsersResolver.getUser(user.email);
     if (userObject)
-      throw new HttpException('User already registered', HttpStatus.CONFLICT);
+      res.json({status: 409, message: 'User already registered'});
     await this.UsersResolver.newUser(user);
-    res.status(201).json('User added successfully');
+    res.json({status: 201, message: 'User added successfully'});
   }
 }

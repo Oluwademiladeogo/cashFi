@@ -26,9 +26,14 @@ const Signup = () => {
     });
 
     if (response.status === 200) {
-      // Signup successful
+      window.location.href = "/login";
     } else {
-      // Signup failed
+      // Create a span with a red background color to indicate failure
+      const span = document.createElement("span");
+      span.textContent = "Signup failed";
+      span.style.backgroundColor = "red";
+      span.classList.add("signup-failed");
+      document.body.appendChild(span);
     }
   };
 

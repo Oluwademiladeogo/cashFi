@@ -30,19 +30,21 @@ export class TransferController {
     const token = await getToken(req);
     const payload = await getTokenPayload(token);
     const me = await this.userResolver.getUser(payload.email);
-    const user = await this.userResolver.getUserByNumber(data.number);
-    const result = await compare(data.pin, user.pin);
-    if (!result) throw new HttpException('Invalid pin', HttpStatus.BAD_REQUEST);
+    const number = parseInt(data.number);
+    const amount = parseInt(data.amount);
+    const user = await this.userResolver.getUserByNumber(number);
+    const result = await compare(data.pin, me.pin);
+    if (!result) return res.json({ status: 400, message: 'invalid pin' });
     const aggBal = me.balance + 1000;
-    if (data.amount > aggBal)
-      throw new HttpException('insufficient funds', HttpStatus.BAD_REQUEST);
-    const receiverAmount = user.balance + data.amount;
-    const giverAmount = user.balance - data.amount;
+    if (amount > aggBal)
+      return res.json({ status: 400, message: 'insufficient funds' });
+    const receiverAmount = user.balance + amount;
+    const giverAmount = user.balance - amount;
     await this.usersService.updateUserBalance(me.id, giverAmount);
     await this.usersService.updateUserBalance(user.id, receiverAmount);
     const date = new Date().toUTCString();
     const message = `Successfully transferred ${data.amount} from ${me.number} to ${data.number} on ${date}`;
     await this.historyService.insertHistory(user.email, message);
-    res.send(true);
+    res.json({ status: 200, message: message });
   }
 }

@@ -1,10 +1,10 @@
-import { IsNumber, Length} from "class-validator";
+import { IsNotEmpty, Length} from "class-validator";
 
 export class transferDto{
-    @IsNumber()
-    number:number
+    @IsNotEmpty()
+    number:string
     @Length(6, 6)
     pin: string;
-    @IsNumber()
-    amount:number
+    @IsNotEmpty()
+    amount:string
 }   

@@ -15,12 +15,13 @@ describe('WithdrawController', () => {
 
   it('should withdraw money if the data is valid', async () => {
     const data: withdrawMoneyDto = {
-      number: 1234567890,
-      amount: 1000,
+      number: '1234567890',
+      amount: '1000',
       pin: '123456',
     };
-const res:any = true
-    await controller.doWithdraw(data, res);
+    const res: any = true;
+    const req: any = true;
+    await controller.doWithdraw(data, req, res);
 
     // Expect the controller to have been called with the correct arguments
     expect(controller.doWithdraw).toHaveBeenCalledWith(data);

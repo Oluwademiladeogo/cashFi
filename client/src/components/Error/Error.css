@@ -1,0 +1,24 @@
+.error-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 150px;
+  background-color: white;
+  box-shadow: 0px 0px 5px red;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.error-message {
+  color: black;
+  font-weight: bold;
+  text-align: center;
+}
+
+.error-message span {
+  margin: 5px;
+}

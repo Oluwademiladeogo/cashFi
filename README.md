@@ -48,15 +48,10 @@ JWT_SECRET="1Qwe2/dada2IBapiInq$932$dSDwe2SsiP21@edaa23jdn@sfs#34gSeDvcx"
 **REQUEST:**
 
 ```tsx
-@IsEmail()
   email: string;
-@IsPhoneNumber('NG')
-  number: number;
-@IsStrongPassword()
-  password: number;
-@Length(6, 6)
+  number: string;
+  password: string;
   pin: string;
-
   username: string;
 ```
 
@@ -85,9 +80,7 @@ message: Error adding user
 **REQUEST:**
 
 ```tsx
-@IsEmail()
   email: string;
-@IsStrongPassword()
   password: string;
 ```
 
@@ -95,11 +88,15 @@ Expected:
 
 code: 200
 
-message: true
+message: Login Successful
 
 code: 400
 
 message: Error getting user details
+
+code: 401
+
+message: unauthorized
 
 code: 500
 
@@ -116,17 +113,15 @@ message: Internal server error
 **REQUEST:**
 
 ```tsx
-@IsNumber()
-  number: number;
-@IsNumber()
-  amount: number;
+  number: string;
+  amount: string;
 ```
 
 **RESPONSE:**
 
 code: 200
 
-message: true
+message: Success message
 
 code: 400
 
@@ -134,7 +129,7 @@ message: Error getting user details
 
 code: 401
 
-message: Unauthorised
+message: Unauthorized
 
 code: 500
 
@@ -151,19 +146,16 @@ message: Internal server error
 **REQUEST:**
 
 ```tsx
-@IsNumber()
-  number:number
-@Length(6, 6)
+  number:string
   pin: string;
-@IsNumber()
-  amount:number
+  amount:string
 ```
 
 **RESPONSE**:
 
 code: 200
 
-message: true
+message: Success message
 
 code: 400
 
@@ -192,19 +184,16 @@ message: Internal server error
 **REQUEST:**
 
 ```tsx
-@IsNumber()
-  number:number
-@Length(6, 6)
+  number:string
   pin: string;
-@IsNumber()
-  amount:number
+  amount:string
 ```
 
 **RESPONSE:**
 
 code: 200
 
-message: true
+message: success message
 
 code: 400
 
@@ -238,7 +227,7 @@ message: Internal server error
 
 code: 200
 
-message: true
+message: success message
 
 code: 400
 

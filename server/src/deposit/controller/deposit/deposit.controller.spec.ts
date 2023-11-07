@@ -34,7 +34,7 @@
 
     it('should deposit money successfully', async () => {
       // Mock the required methods and their responses
-      const userData: depositDto = { number: 123, amount: 100 }; // Change number to a string
+      const userData: depositDto = { number: '123', amount: '100' }; // Change number to a string
       const user = { email: 'test@example.com' };
       const date = new Date().toUTCString();
 

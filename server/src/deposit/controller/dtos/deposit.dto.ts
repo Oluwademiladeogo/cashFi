@@ -1,8 +1,8 @@
-import { IsAlpha, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsNumber } from 'class-validator';
 
 export class depositDto {
-  @IsNumber()
-  number: number;
-  @IsNumber()
-  amount: number;
+  @IsNotEmpty()
+  number: string;
+  @IsNotEmpty()
+  amount: string;
 }

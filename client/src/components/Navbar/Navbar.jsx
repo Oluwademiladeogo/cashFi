@@ -2,19 +2,25 @@ import React from 'react';
 import './Navbar.css'
 import { useState, useEffect } from 'react';
 const Navbar = () => {
-  // Fetch the user's name and balance from the backend
-  const [name, setName] = useState('Name');
-  const [balance, setBalance] = useState(0.0);
+  const [name, setName] = useState('name');
+  const [balance, setBalance] = useState(0);
+  const authToken = localStorage.getItem('authorization');
   useEffect(() => {
-    const getDetails = async()=>{
-        const response = fetch('localhost:3000/user');
-    if (response.ok) {
-      const user = await response.json();
-      setName(user.name);
-      setBalance(user.balance);
-    }
-    }
-    getDetails()
+    const getDetails = async () => {
+      const response = await fetch('http://localhost:3000/dashboard', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: authToken,
+        },
+      });
+      const data = await response.json();
+      if(!data) throw new Error;
+      setName(data.name);
+      setBalance(data.balance);
+    };
+
+    getDetails();
   }, []);
 
   return (

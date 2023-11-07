@@ -1,29 +1,53 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import './Withdraw.css';
 import Navbar from '../Navbar/Navbar';
 
+import Error from '../Error/Error';
 const Withdraw = () => {
-  const [pin, setPin] = React.useState('');
-  const [amount, setAmount] = React.useState('');
+  const [amount, setAmount] = useState('');
+  const [access, setAccess] = useState(true);
+  const [pin, setPin] = useState('');
+  const [fetchMessage, setFetchMessage] = useState('');
+  const [err, setError] = useState({
+    status: '200',
+    message: 'Success',
+  });
+  const authToken = localStorage.getItem('authorization');
+
+  useEffect(() => {
+    if (!authToken) {
+      setAccess(false);
+      setError({
+        status: 401,
+        message: 'Unauthorised',
+      });
+      // window.location.href = "/"
+    }
+  }, [authToken]);
+
+  if (!access) {
+    return <Error status={err.status} message={err.message} />;
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    const response = await fetch('http://localhost:3000/withdraw', {
+    console.log(typeof amount);
+    const response = await fetch(`http://localhost:3000/withdraw`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        authorization: authToken,
       },
       body: JSON.stringify({
-        pin,
         amount,
+        pin,
       }),
     });
-
-    if (response.status === 200) {
-      // Withdrawal successful
+    const data = await response.json();
+    if (data.status === 200) {
+      setFetchMessage(data.message);
     } else {
-      // Withdrawal failed
+      setFetchMessage(`Transfer failed, Reason: ${data.message}`);
     }
   };
 
@@ -56,6 +80,7 @@ const Withdraw = () => {
             />
           </div>
           <button>withdraw</button>
+          <span className="fetch-message">{fetchMessage}</span>
         </form>
       </div>
     </>

@@ -1,31 +1,55 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import './Transfer.css';
 import Navbar from '../Navbar/Navbar';
 
+import Error from '../Error/Error';
 const Transfer = () => {
-  const [number, setNumber] = React.useState('');
-  const [amount, setAmount] = React.useState('');
-  const [pin, setPin] = React.useState('');
+  const [amount, setAmount] = useState('');
+  const [number, setNumber] = useState('');
+  const [access, setAccess] = useState(true);
+  const [pin, setPin] = useState('');
+  const [fetchMessage, setFetchMessage] = useState('');
+  const [err, setError] = useState({
+    status: '200',
+    message: 'Success',
+  });
+  const authToken = localStorage.getItem('authorization');
+
+  useEffect(() => {
+    if (!authToken) {
+      setAccess(false);
+      setError({
+        status: 401,
+        message: 'Unauthorised',
+      });
+      // window.location.href = "/"
+    }
+  }, [authToken]);
+
+  if (!access) {
+    return <Error status={err.status} message={err.message} />;
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    const response = await fetch('http://localhost:3000/transfer', {
+    console.log(typeof amount);
+    const response = await fetch(`http://localhost:3000/transfer`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        authorization: authToken,
       },
       body: JSON.stringify({
-        number,
         amount,
+        number,
         pin,
       }),
     });
-
-    if (response.status === 200) {
-      // Transfer successful
+    const data = await response.json();
+    if (data.status === 200) {
+      setFetchMessage(data.message);
     } else {
-      // Transfer failed
+      setFetchMessage(`Transfer failed, Reason: ${data.message}`);
     }
   };
 
@@ -52,6 +76,7 @@ const Transfer = () => {
               name="pin"
               onChange={(e) => setPin(e.target.value)}
             />
+
             <input
               className="input amount"
               type="number"
@@ -61,6 +86,7 @@ const Transfer = () => {
             />
           </div>
           <button>transfer</button>
+          <span className="fetch-message">{fetchMessage}</span>
         </form>
       </div>
     </>

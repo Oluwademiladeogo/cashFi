@@ -1,53 +1,88 @@
 import { useEffect, useState } from 'react';
 import './Dashboard.css';
+import Loading from '../Loading/Loading';
+import Error from '../Error/Error';
 const Dashboard = () => {
-  //user cant access this page nor the backend service without having some sort of auth where isauth comes in then loading for a while to fetch auth info if not auth display a modal saying user not auth
   const [name, setName] = useState('name');
   const [balance, setBalance] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [access, setAccess] = useState(true);
+  const [err, setError] = useState({
+    status: '200',
+    message: 'Success',
+  });
+  const authToken = localStorage.getItem('authorization');
   useEffect(() => {
-   const getDetails = async()=>{
-    const response = fetch('localhost:3000/dashboard', () => {
-      if (!response.ok) throw new Error('Failed to fetch data');
-      setName(name);
-      setBalance(balance);
-    });
-    getDetails()
-   }
+    const getDetails = async () => {
+      const response = await fetch('http://localhost:3000/dashboard', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          authoriation: authToken,
+        },
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        setAccess(false);
+        setError({
+          status: response.status,
+          message: response.statusText,
+        });
+      }
+
+      setName(data.name);
+      setBalance(data.balance);
+      setIsLoading(false);
+    };
+
+    getDetails();
   }, []);
+
+  if (isLoading) {
+    return <Loading />;
+  }
+  setTimeout(() => {
+    if (!access) {
+      window.location.href = '/login';
+    }
+  }, 4000);
+  if (!access) {
+    return <Error status={err.status} message={err.message} />;
+  }
+
   return (
-    <>
-      <div className="dashboard-page">
-        <div className="dashboard-heading">
-          <div className="dashboard-heading-title">
-            <h1>CashFi</h1>
-          </div>
-          <div className="dashboard-heading-body">
-            <h1>
-              Hi {name}, your current balance is {balance} NGN
-            </h1>
-            <span id="dashboard-heading-body-min">
-              <h2> what do you want to do today?</h2>
-            </span>
-          </div>
+    <div className="dashboard-page">
+      <div className="dashboard-heading">
+        <div className="dashboard-heading-title">
+          <h1>CashFi</h1>
         </div>
-
-        <div className="dashboard-body">
-          <div className="dashboard-link deposit">
-            <a href="/deposit">deposit</a>
-          </div>
-          <div className="dashboard-link withdraw">
-            <a href="/withdraw">withdraw</a>
-          </div>
-
-          <div className="dashboard-link transfer">
-            <a href="/transfer">transfer</a>
-          </div>
-          <div className="dashboard-link history">
-            <a href="/history">history</a>
-          </div>
+        <div className="dashboard-heading-body">
+          <h1>
+            Hi {name}, your current balance is {balance} NGN
+          </h1>
+          <span id="dashboard-heading-body-min">
+            <h2> what do you want to do today?</h2>
+          </span>
         </div>
       </div>
-    </>
+
+      <div className="dashboard-body">
+        <div className="dashboard-link deposit">
+          <a href="/deposit">deposit</a>
+        </div>
+        <div className="dashboard-link withdraw">
+          <a href="/withdraw">withdraw</a>
+        </div>
+
+        <div className="dashboard-link transfer">
+          <a href="/transfer">transfer</a>
+        </div>
+        <div className="dashboard-link history">
+          <a href="/history">history</a>
+        </div>
+      </div>
+    </div>
   );
 };
+
 export default Dashboard;

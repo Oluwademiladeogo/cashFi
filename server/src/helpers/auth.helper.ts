@@ -21,7 +21,11 @@ const encrypt = async (password: string) => {
   return { salt, result };
 };
 const compare = async (enteredValue: string, hashedValue: string) => {
-  return await bcrypt.compare(enteredValue, hashedValue);
+  try {
+    return await bcrypt.compare(enteredValue, hashedValue);
+  } catch (error) {
+    return(false);
+  }
 };
 const getToken = async (req) => {
   try {
@@ -30,7 +34,7 @@ const getToken = async (req) => {
     const bearerToken = req.headers['authorization']?.split(' ')[1];
     return bearerToken;
   } catch (error) {
-    throw new HttpException('Internal Server Error', HttpStatus.INTERNAL_SERVER_ERROR);
+    throw new HttpException('Error getting token', HttpStatus.UNAUTHORIZED);
   }
 };
 const getTokenPayload = async (bearerToken: string) => {
@@ -38,7 +42,7 @@ const getTokenPayload = async (bearerToken: string) => {
     const payload = await jwt.verify(bearerToken, process.env.JWT_SECRET);
     return payload;
   } catch (error) {
-    throw new HttpException('Internal Server Error', HttpStatus.INTERNAL_SERVER_ERROR);
+    throw new HttpException('Token error', HttpStatus.UNAUTHORIZED);
   }
 };
 export { generateToken, encrypt, compare, getToken, getTokenPayload };

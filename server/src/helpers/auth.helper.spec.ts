@@ -1,8 +1,19 @@
-import { generateToken, encrypt, compare, getToken, getTokenPayload } from './auth.helper';
+import {
+  generateToken,
+  encrypt,
+  compare,
+  getToken,
+  getTokenPayload,
+} from './auth.helper';
 
 describe('generateToken()', () => {
   it('should generate a valid JWT token', async () => {
-    const user = { id: 1, username: 'test', email: 'test@example.com', number: '1234567890' };
+    const user = {
+      id: 1,
+      username: 'test',
+      email: 'test@example.com',
+      number: '1234567890',
+    };
     const token = await generateToken(user);
     expect(token).toBeDefined();
   });
@@ -44,7 +55,12 @@ describe('getToken()', () => {
 
 describe('getTokenPayload()', () => {
   it('should verify and decode a bearer token', async () => {
-    const token = await generateToken({ id: 1, username: 'test', email: 'test@example.com', number: '1234567890' });
+    const token = await generateToken({
+      id: 1,
+      username: 'test',
+      email: 'test@example.com',
+      number: '1234567890',
+    });
     const payload = await getTokenPayload(token);
 
     expect(payload).toBeDefined();

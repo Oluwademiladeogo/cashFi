@@ -3,10 +3,12 @@ import { userModel } from 'models/userschema';
 @Injectable()
 export class DepositService {
   async depositData(data) {
-    const account = await userModel.findOne({ number: data.number });
+    const num = parseInt(data.number)
+     const amount = parseInt(data.amount)
+    const account = await userModel.findOne({ number: num });
     if (!account)
       throw new HttpException('Account not found', HttpStatus.BAD_REQUEST);
-    account.balance += data.amount;
+    account.balance += amount;
     await account.save();
     return true;
   }

@@ -1,28 +1,56 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './Deposit.css';
 import Navbar from '../Navbar/Navbar';
 
+import Error from '../Error/Error';
 const Deposit = () => {
   const [amount, setAmount] = useState('');
   const [number, setNumber] = useState('');
+  const [access, setAccess] = useState(true);
+  const [fetchMessage, setFetchMessage] = useState('');
+  const [err, setError] = useState({
+    status: '200',
+    message: 'Success',
+  });
+  const authToken = localStorage.getItem('authorization');
+
+  useEffect(() => {
+    if (!authToken) {
+      setAccess(false);
+      setError({
+        status: 401,
+        message: 'Unauthorised',
+      });
+      // window.location.href = "/"
+    }
+  }, [authToken]);
+
+  if (!access) {
+    return <Error status={err.status} message={err.message} />;
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    const response = await fetch('http://localhost:3000/deposit', {
+console.log(typeof( amount))
+    const response = await fetch(`http://localhost:3000/deposit`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        authorization: authToken,
       },
       body: JSON.stringify({
         amount,
         number,
       }),
     });
-
-    if (response.status === 200) {
-      // Deposit successful
+    const data = await response.json()
+    if (data.status === 200) {
+      setFetchMessage(data.message);
     } else {
-      // Deposit failed
+      setFetchMessage(
+        'Transfer failed, Reason: ',
+        response.message,
+      );
     }
   };
 
@@ -35,12 +63,13 @@ const Deposit = () => {
             <h1>Deposit</h1>
           </div>
           <div className="form-input">
+            +
             <input
               className="input number"
-              type="number"
               placeholder="Phone Number"
               name="number"
               onChange={(e) => setNumber(e.target.value)}
+              required
             />
             <input
               className="input amount"
@@ -48,9 +77,11 @@ const Deposit = () => {
               placeholder="Amount"
               name="amount"
               onChange={(e) => setAmount(e.target.value)}
+              required
             />
           </div>
           <button>deposit</button>
+          <span className="fetch-message">{fetchMessage}</span>
         </form>
       </div>
     </>

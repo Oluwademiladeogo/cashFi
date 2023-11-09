@@ -23,9 +23,9 @@ let SignupController = class SignupController {
     async SignupUser(user, res) {
         const userObject = await this.UsersResolver.getUser(user.email);
         if (userObject)
-            throw new common_1.HttpException('User already registered', common_1.HttpStatus.CONFLICT);
+            res.json({ status: 409, message: 'User already registered' });
         await this.UsersResolver.newUser(user);
-        res.status(201).json('User added successfully');
+        res.json({ status: 201, message: 'User added successfully' });
     }
 };
 exports.SignupController = SignupController;

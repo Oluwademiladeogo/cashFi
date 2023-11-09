@@ -9,7 +9,10 @@ export class HistoryResolver {
     return await this.HistoryService.getHistory(email);
   }
   @Mutation()
-  async insertHistory(@Args('email') email: string, @Args('message') message: string) {
+  async insertHistory(
+    @Args('email') email: string,
+    @Args('message') message: string,
+  ) {
     return await this.HistoryService.insertHistory(email, message);
   }
 }

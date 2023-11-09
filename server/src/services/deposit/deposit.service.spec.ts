@@ -29,7 +29,9 @@ describe('DepositService', () => {
 
     mockUserModel.findOne.mockResolvedValue(null);
 
-    expect(async () => await service.depositData(mockData)).toThrowError(new HttpException('Account not found', HttpStatus.BAD_REQUEST));
+    expect(async () => await service.depositData(mockData)).toThrowError(
+      new HttpException('Account not found', HttpStatus.BAD_REQUEST),
+    );
   });
 
   it('should deposit the amount into the account if the account is found', async () => {

@@ -17,8 +17,8 @@ export class SignupController {
   async SignupUser(@Body() user: NewUserDto, @Res() res: Response) {
     const userObject = await this.UsersResolver.getUser(user.email);
     if (userObject)
-      res.json({status: 409, message: 'User already registered'});
+      res.json({ status: 409, message: 'User already registered' });
     await this.UsersResolver.newUser(user);
-    res.json({status: 201, message: 'User added successfully'});
+    res.json({ status: 201, message: 'User added successfully' });
   }
 }

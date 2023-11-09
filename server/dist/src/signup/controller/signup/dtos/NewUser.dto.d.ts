@@ -1,6 +1,6 @@
 export declare class NewUserDto {
     email: string;
-    number: number;
+    number: string;
     password: string;
     pin: string;
     username: string;

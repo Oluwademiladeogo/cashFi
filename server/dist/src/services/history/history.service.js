@@ -14,7 +14,7 @@ let HistoryService = class HistoryService {
         try {
             const user = await userschema_1.userModel.findOne({ email: email });
             if (!user)
-                throw new common_1.HttpException('Error getting user details', common_1.HttpStatus.BAD_REQUEST);
+                return false;
             return user.history;
         }
         catch (error) {

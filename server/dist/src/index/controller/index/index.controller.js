@@ -16,7 +16,7 @@ exports.IndexController = void 0;
 const common_1 = require("@nestjs/common");
 let IndexController = class IndexController {
     getIndex(res) {
-        res.redirect("/dashboard");
+        res.redirect('/dashboard');
     }
 };
 exports.IndexController = IndexController;

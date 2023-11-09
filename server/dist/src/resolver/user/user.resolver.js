@@ -55,8 +55,8 @@ __decorate([
 ], UserResolver.prototype, "getUserByNumber", null);
 __decorate([
     (0, graphql_1.Mutation)(),
-    __param(0, (0, graphql_1.Args)("userId")),
-    __param(1, (0, graphql_1.Args)("amount")),
+    __param(0, (0, graphql_1.Args)('userId')),
+    __param(1, (0, graphql_1.Args)('amount')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, Number]),
     __metadata("design:returntype", Promise)

@@ -29,8 +29,8 @@ let DepositController = class DepositController {
         const user = await this.UserResolver.getUserByNumber(numGotten);
         if (!user)
             return res.json({
-                status: 404,
-                message: 'user not found',
+                status: 400,
+                message: 'Error getting user details',
             });
         const email = user.email;
         await this.depositResolver.depositData(data);

@@ -29,6 +29,6 @@ export class LoginController {
     };
     const token = await generateToken(dbUser);
     if (!token) return res.json({ status: 401, message: 'unauthorized' });
-    res.json({ status: 200, message: "Login successful", client_token: token });
+    res.json({ status: 200, message: 'Login successful', client_token: token });
   }
 }

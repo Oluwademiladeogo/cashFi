@@ -19,7 +19,10 @@ export class UsersService {
       });
       await createUser.save();
     } catch (error) {
-      throw new HttpException('Internal server error', HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException(
+        'Internal server error',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
   async getUser(email: string) {

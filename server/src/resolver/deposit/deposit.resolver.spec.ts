@@ -3,7 +3,7 @@ import { DepositService } from 'src/services/deposit/deposit.service';
 
 describe('DepositResolver', () => {
   let resolver: DepositResolver;
-  let depositServiceMock:any;
+  let depositServiceMock: any;
 
   beforeEach(() => {
     depositServiceMock = jest.mock('src/services/deposit/deposit.service');

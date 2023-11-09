@@ -5,7 +5,7 @@
 ### About
 
 A Bank App built with graphql and nestJs on the backend and ReactJs on the frontend
-Hosted on: link:
+Hosted on: https://cash-fi-sage.vercel.app/
 
 ### Using The Api
 

@@ -12,9 +12,7 @@ describe('SignupController', () => {
 
     const module: TestingModule = await Test.createTestingModule({
       controllers: [SignupController],
-      providers: [
-        { provide: UserResolver, useValue: userResolverMock },
-      ],
+      providers: [{ provide: UserResolver, useValue: userResolverMock }],
     }).compile();
 
     controller = module.get<SignupController>(SignupController);

@@ -12,6 +12,8 @@ describe('AuthMiddleware', () => {
   });
 
   it('should throw an error if the middleware is called', () => {
-    expect(() => middleware.use(null, null, nextSpy)).toThrow(new HttpException('Unauthorised', HttpStatus.UNAUTHORIZED));
+    expect(() => middleware.use(null, null, nextSpy)).toThrow(
+      new HttpException('Unauthorised', HttpStatus.UNAUTHORIZED),
+    );
   });
 });

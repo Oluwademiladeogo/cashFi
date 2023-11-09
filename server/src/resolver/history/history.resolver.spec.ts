@@ -14,7 +14,9 @@ describe('HistoryResolver', () => {
     const email = 'john.doe@example.com';
 
     // Mock the history service to return a successful response
-    historyServiceMock.getHistory.mockResolvedValue([{ message: 'This is a message' }]);
+    historyServiceMock.getHistory.mockResolvedValue([
+      { message: 'This is a message' },
+    ]);
 
     // Call the resolver
     const result = await resolver.getHistory(email);
@@ -37,7 +39,10 @@ describe('HistoryResolver', () => {
     const result = await resolver.insertHistory(email, message);
 
     // Expect the history service to have been called with the correct arguments
-    expect(historyServiceMock.insertHistory).toHaveBeenCalledWith(email, message);
+    expect(historyServiceMock.insertHistory).toHaveBeenCalledWith(
+      email,
+      message,
+    );
 
     // Expect the result to be true
     expect(result).toBe(true);

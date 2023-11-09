@@ -20,7 +20,7 @@ __decorate([
 ], NewUserDto.prototype, "email", void 0);
 __decorate([
     (0, class_validator_1.IsPhoneNumber)('NG'),
-    __metadata("design:type", Number)
+    __metadata("design:type", String)
 ], NewUserDto.prototype, "number", void 0);
 __decorate([
     (0, class_validator_1.IsStrongPassword)(),

@@ -31,9 +31,9 @@ describe('LoginController', () => {
   it('should call the user resolver to get the user', async () => {
     const req = getMockReq();
     req.body = { email: 'john.doe@example.com', password: 'password123' };
-    const res:any = getMockRes();
+    const res: any = getMockRes();
 
-    await controller.loginUser(new loginDto, res);
+    await controller.loginUser(new loginDto(), res);
 
     // Expect the user resolver mock to have been called with the correct arguments
     expect(userResolverMock.getUser).toHaveBeenCalledWith(req.body.email);

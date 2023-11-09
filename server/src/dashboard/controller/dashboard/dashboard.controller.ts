@@ -1,9 +1,4 @@
-import {
-  Controller,
-  Get,
-  Req,
-  Res,
-} from '@nestjs/common';
+import { Controller, Get, Req, Res } from '@nestjs/common';
 import { Response } from 'express';
 import { getToken, getTokenPayload } from 'src/helpers/auth.helper';
 import { UserResolver } from 'src/resolver/user/user.resolver';

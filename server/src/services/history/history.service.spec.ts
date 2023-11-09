@@ -29,12 +29,16 @@ describe('HistoryService', () => {
 
     mockUserModel.findOne.mockResolvedValue(null);
 
-    expect(async () => await service.getHistory(mockEmail)).toThrowError(new HttpException('Error getting user details', HttpStatus.BAD_REQUEST));
+    expect(async () => await service.getHistory(mockEmail)).toThrowError(
+      new HttpException('Error getting user details', HttpStatus.BAD_REQUEST),
+    );
   });
 
-  it('should return the user\'s history if the user is found', async () => {
+  it("should return the user's history if the user is found", async () => {
     const mockEmail = 'user@example.com';
-    const mockHistory = ['Successfully withdrew 100 from 1234567890 on 2023-11-06T21:56:42.000Z'];
+    const mockHistory = [
+      'Successfully withdrew 100 from 1234567890 on 2023-11-06T21:56:42.000Z',
+    ];
     const mockUser = { history: mockHistory };
 
     mockUserModel.findOne.mockResolvedValue(mockUser);
@@ -46,16 +50,22 @@ describe('HistoryService', () => {
 
   it('should throw an error if the user is not found when inserting history', async () => {
     const mockEmail = 'user@example.com';
-    const mockMessage = 'Successfully withdrew 100 from 1234567890 on 2023-11-06T21:56:42.000Z';
+    const mockMessage =
+      'Successfully withdrew 100 from 1234567890 on 2023-11-06T21:56:42.000Z';
 
     mockUserModel.findOne.mockResolvedValue(null);
 
-    expect(async () => await service.insertHistory(mockEmail, mockMessage)).toThrowError(new HttpException('Error getting user details', HttpStatus.BAD_REQUEST));
+    expect(
+      async () => await service.insertHistory(mockEmail, mockMessage),
+    ).toThrowError(
+      new HttpException('Error getting user details', HttpStatus.BAD_REQUEST),
+    );
   });
 
-  it('should insert the message into the user\'s history if the user is found', async () => {
+  it("should insert the message into the user's history if the user is found", async () => {
     const mockEmail = 'user@example.com';
-    const mockMessage = 'Successfully withdrew 100 from 1234567890 on 2023-11-06T21:56:42.000Z';
+    const mockMessage =
+      'Successfully withdrew 100 from 1234567890 on 2023-11-06T21:56:42.000Z';
     const mockUser = { history: [] };
 
     mockUserModel.findOne.mockResolvedValue(mockUser);

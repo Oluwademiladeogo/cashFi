@@ -29,7 +29,7 @@ const compare = async (enteredValue, hashedValue) => {
         return await bcrypt.compare(enteredValue, hashedValue);
     }
     catch (error) {
-        return (false);
+        return false;
     }
 };
 exports.compare = compare;

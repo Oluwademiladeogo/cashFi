@@ -5,8 +5,7 @@ export class HistoryService {
   async getHistory(email) {
     try {
       const user = await userModel.findOne({ email: email });
-      if (!user)
-        return false;
+      if (!user) return false;
       return user.history;
     } catch (error) {
       throw new HttpException(
@@ -15,11 +14,14 @@ export class HistoryService {
       );
     }
   }
-  async insertHistory(email: string, message: string ) {
+  async insertHistory(email: string, message: string) {
     try {
       const user = await userModel.findOne({ email: email });
       if (!user)
-        throw new HttpException('Error getting user details', HttpStatus.BAD_REQUEST);
+        throw new HttpException(
+          'Error getting user details',
+          HttpStatus.BAD_REQUEST,
+        );
       const history = user.history;
       history.push(message);
       user.history = history;

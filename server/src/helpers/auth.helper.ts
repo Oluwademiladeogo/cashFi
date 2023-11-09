@@ -24,7 +24,7 @@ const compare = async (enteredValue: string, hashedValue: string) => {
   try {
     return await bcrypt.compare(enteredValue, hashedValue);
   } catch (error) {
-    return(false);
+    return false;
   }
 };
 const getToken = async (req) => {

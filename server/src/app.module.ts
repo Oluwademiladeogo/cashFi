@@ -15,15 +15,13 @@ import { HistoryResolver } from './resolver/history/history.resolver';
 import { ConfigModule } from '@nestjs/config';
 import { DashboardController } from './dashboard/controller/dashboard/dashboard.controller';
 import { TransferController } from './transfer/controller/transfer/transfer.controller';
-import * as dotenv from 'dotenv'
-import * as mongoose from 'mongoose'
-dotenv.config()
-const MONGODB_URI = process.env.MONGODB_URI
-mongoose
-  .connect(MONGODB_URI)
-  .then(() => {
-    console.log("Connected to Mongodb");
-  });
+import * as dotenv from 'dotenv';
+import * as mongoose from 'mongoose';
+dotenv.config();
+const MONGODB_URI = process.env.MONGODB_URI;
+mongoose.connect(MONGODB_URI).then(() => {
+  console.log('Connected to Mongodb');
+});
 
 @Module({
   imports: [

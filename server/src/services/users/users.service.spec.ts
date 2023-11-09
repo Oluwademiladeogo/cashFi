@@ -65,7 +65,7 @@ describe('UsersService', () => {
     });
   });
 
-  it('should update a user\'s balance', async () => {
+  it("should update a user's balance", async () => {
     const userId = '1234567890';
     const amount = 100;
 

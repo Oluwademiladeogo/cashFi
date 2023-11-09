@@ -33,7 +33,7 @@ const Transfer = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(typeof amount);
-    const response = await fetch(`http://localhost:3000/transfer`, {
+    const response = await fetch(`https://cashfi.onrender.com/transfer`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

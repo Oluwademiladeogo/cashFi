@@ -16,7 +16,7 @@ const History = () => {
 
   useEffect(() => {
     const getDetails = async () => {
-      const response = await fetch('http://localhost:3000/history', {
+      const response = await fetch('https://cashfi.onrender.com/history', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

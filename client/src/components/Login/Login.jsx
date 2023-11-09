@@ -8,7 +8,7 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const response = await fetch('http://localhost:3000/login', {
+    const response = await fetch('https://cashfi.onrender.com/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -28,11 +28,14 @@ const Login = () => {
     }
   };
 
-  setTimeout(() => {
-    if (message === 'Login successful') {
+  const authToken = localStorage.getItem('authorization');
+  if (authToken) {
+    setTimeout(() => {
       window.location.href = '/dashboard';
-    }
-  }, 2000);
+    }, 2000);
+  } else {
+    setMessage('Something went wrong');
+  }
 
   return (
     <div className="login-page">

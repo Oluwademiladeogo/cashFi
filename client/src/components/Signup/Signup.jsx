@@ -11,7 +11,7 @@ const Signup = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const response = await fetch("http://localhost:3000/signup", {
+    const response = await fetch("https://cashfi.onrender.com/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

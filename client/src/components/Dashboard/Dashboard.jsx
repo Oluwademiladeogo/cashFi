@@ -14,11 +14,11 @@ const Dashboard = () => {
   const authToken = localStorage.getItem('authorization');
   useEffect(() => {
     const getDetails = async () => {
-      const response = await fetch('http://localhost:3000/dashboard', {
+      const response = await fetch('https://cashfi.onrender.com/dashboard', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          authoriation: authToken,
+          authorization: authToken,
         },
       });
       const data = await response.json();

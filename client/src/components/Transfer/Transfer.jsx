@@ -47,6 +47,9 @@ const Transfer = () => {
     });
     const data = await response.json();
     if (data.status === 200) {
+      setTimeout(() => {
+        window.location.href = '/dashboard';
+      }, 3000);
       setFetchMessage(data.message);
     } else {
       setFetchMessage(`Transfer failed, Reason: ${data.message}`);

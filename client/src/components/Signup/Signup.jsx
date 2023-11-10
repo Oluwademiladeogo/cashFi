@@ -7,33 +7,40 @@ const Signup = () => {
   const [number, setNumber] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [pin, setPin] = React.useState("");
+  const [message, setMessage] = React.useState('');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const response = await fetch("https://cashfi.onrender.com/signup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username,
-        email,
-        number,
-        password,
-        pin,
-      }),
-    });
+    const getDetails = async () => {
+      const response = await fetch('https://cashfi.onrender.com/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username,
+          email,
+          number,
+          password,
+          pin,
+        }),
+      });
 
-    if (response.status === 200) {
-      window.location.href = "/login";
-    } else {
-      // Create a span with a red background color to indicate failure
-      const span = document.createElement("span");
-      span.textContent = "Signup failed";
-      span.style.backgroundColor = "red";
-      span.classList.add("signup-failed");
-      document.body.appendChild(span);
+      const data = await response.json();
+      return [data, response];
+    };
+
+    const [data, response] = await getDetails();
+    if(response.status !== 201){
+      setMessage(`Signup failed. Reason: ${data.message}`)
+    }
+    else{
+      setTimeout(()=>{
+        window.location.href = '/login'
+      }, 2000)
+      setMessage("Signup successful")
+
     }
   };
 
@@ -71,7 +78,7 @@ const Signup = () => {
           />
           <input
             className="input pin"
-            type="pin"
+            type="password "
             placeholder="pin"
             name="pin"
             onChange={(e) => setPin(e.target.value)}
@@ -86,6 +93,7 @@ const Signup = () => {
             </a>
           </div>
         </div>
+        <div>{message}</div>
       </form>
     </div>
   );

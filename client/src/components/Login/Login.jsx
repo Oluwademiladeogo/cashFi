@@ -5,20 +5,28 @@ const Login = () => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [message, setMessage] = React.useState('');
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const response = await fetch('https://cashfi.onrender.com/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-    });
-    const data = await response.json();
+    const getDetails = async () => {
+      const response = await fetch('https://cashfi.onrender.com/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+
+      const data = await response.json();
+      return [data, response];
+    };
+
+    const [data, response] = await getDetails();
+
     if (response.ok) {
       const token = data.client_token;
       localStorage.setItem('authorization', `Bearer ${token}`);
@@ -26,16 +34,15 @@ const Login = () => {
     } else {
       setMessage('Incorrect email or password');
     }
+    const authToken = localStorage.getItem('authorization');
+    if (authToken) {
+      setTimeout(() => {
+        window.location.href = '/dashboard';
+      }, 2000);
+    } else {
+      setMessage('Something went wrong');
+    }
   };
-
-  const authToken = localStorage.getItem('authorization');
-  if (authToken) {
-    setTimeout(() => {
-      window.location.href = '/dashboard';
-    }, 2000);
-  } else {
-    setMessage('Something went wrong');
-  }
 
   return (
     <div className="login-page">

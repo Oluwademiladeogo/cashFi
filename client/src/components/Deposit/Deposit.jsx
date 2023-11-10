@@ -21,7 +21,6 @@ const Deposit = () => {
         status: 401,
         message: 'Unauthorised',
       });
-      // window.location.href = "/"
     }
   }, [authToken]);
 
@@ -31,7 +30,7 @@ const Deposit = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-console.log(typeof( amount))
+    console.log(typeof amount);
     const response = await fetch(`https://cashfi.onrender.com/deposit`, {
       method: 'POST',
       headers: {
@@ -43,14 +42,14 @@ console.log(typeof( amount))
         number,
       }),
     });
-    const data = await response.json()
+    const data = await response.json();
     if (data.status === 200) {
+      setTimeout(() => {
+        window.location.href = '/dashboard';
+      }, 3000);
       setFetchMessage(data.message);
     } else {
-      setFetchMessage(
-        'Transfer failed, Reason: ',
-        response.message,
-      );
+      setFetchMessage('Transfer failed, Reason: ', response.message);
     }
   };
 

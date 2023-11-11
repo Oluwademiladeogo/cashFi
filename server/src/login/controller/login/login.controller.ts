@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   HttpException,
   HttpStatus,
   Inject,
@@ -18,6 +19,10 @@ import { UserResolver } from 'src/resolver/user/user.resolver';
 export class LoginController {
   constructor(@Inject(UserResolver) private UserResolver: UserResolver) {}
   @UsePipes(new ValidationPipe())
+  @Get()
+  keepUp(@Res() res:Response){
+    res.send("login")
+  }
   @Post()
   async loginUser(@Body() user: loginDto, @Res() res: Response) {
     //isauth not used but will reset headers

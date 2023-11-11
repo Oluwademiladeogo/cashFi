@@ -21,6 +21,9 @@ let LoginController = class LoginController {
     constructor(UserResolver) {
         this.UserResolver = UserResolver;
     }
+    keepUp(res) {
+        res.send("login");
+    }
     async loginUser(user, res) {
         const dbRes = await this.UserResolver.getUser(user.email);
         const dbUser = {
@@ -37,6 +40,13 @@ let LoginController = class LoginController {
 exports.LoginController = LoginController;
 __decorate([
     (0, common_1.UsePipes)(new common_1.ValidationPipe()),
+    (0, common_1.Get)(),
+    __param(0, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], LoginController.prototype, "keepUp", null);
+__decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Res)()),

@@ -25,8 +25,7 @@ export class DepositController {
     const numGotten = parseInt(data.number);
     const user = await this.UserResolver.getUserByNumber(numGotten);
     if (!user)
-      return res.json({
-        status: 400,
+      return res.status(400).json({
         message: 'Error getting user details',
       });
     const email = user.email;
@@ -34,8 +33,7 @@ export class DepositController {
     const date = new Date().toUTCString();
     const message = `Successfully deposited ${data.amount} in ${user.number} on ${date}`;
     await this.HistoryResolver.insertHistory(email, message);
-    res.json({
-      status: 200,
+    res.status(200).json({
       message: message,
     });
   }

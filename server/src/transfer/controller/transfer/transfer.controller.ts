@@ -34,10 +34,10 @@ export class TransferController {
     const amount = parseInt(data.amount);
     const user = await this.userResolver.getUserByNumber(number);
     const result = await compare(data.pin, me.pin);
-    if (!result) return res.json({ status: 400, message: 'invalid pin' });
+    if (!result) return res.status(400).json({ message: 'invalid pin' });
     const aggBal = me.balance + 1000;
     if (amount > aggBal)
-      return res.json({ status: 400, message: 'insufficient funds' });
+      return res.status(400).json({ message: 'insufficient funds' });
     const receiverAmount = user.balance + amount;
     const giverAmount = user.balance - amount;
     await this.usersService.updateUserBalance(me.id, giverAmount);
@@ -45,6 +45,6 @@ export class TransferController {
     const date = new Date().toUTCString();
     const message = `Successfully transferred ${data.amount} from ${me.number} to ${data.number} on ${date}`;
     await this.historyService.insertHistory(user.email, message);
-    res.json({ status: 200, message: message });
+    res.status(200).json({ message: message });
   }
 }

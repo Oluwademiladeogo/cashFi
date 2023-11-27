@@ -20,8 +20,8 @@ export class LoginController {
   constructor(@Inject(UserResolver) private UserResolver: UserResolver) {}
   @UsePipes(new ValidationPipe())
   @Get()
-  keepUp(@Res() res:Response){
-    res.send("login")
+  keepUp(@Res() res: Response) {
+    res.send('login');
   }
   @Post()
   async loginUser(@Body() user: loginDto, @Res() res: Response) {
@@ -33,7 +33,7 @@ export class LoginController {
       number: dbRes.number,
     };
     const token = await generateToken(dbUser);
-    if (!token) return res.json({ status: 401, message: 'unauthorized' });
-    res.json({ status: 200, message: 'Login successful', client_token: token });
+    if (!token) return res.status(400).json({ message: 'unauthorized' });
+    res.status(200).json({ message: 'Login successful', client_token: token });
   }
 }

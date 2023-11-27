@@ -35,16 +35,16 @@ export class WithdrawController {
     const user = await this.userResolver.getUser(payload.email);
     const amount = parseInt(data.amount);
     const result = await compare(data.pin, user.pin);
-    if (!result) return res.json({ status: 400, message: 'invalid pin' });
+    if (!result) return res.status(400).json({ message: 'invalid pin' });
     const aggBal = user.balance + 1000;
     if (amount > aggBal)
-      return res.json({ status: 400, message: 'insufficient funds' });
+      return res.status(400).json({ message: 'insufficient funds' });
     const newamount = user.balance - amount;
     await this.usersService.updateUserBalance(user.id, amount);
     const date = new Date().toUTCString();
     const message = `Successfully withdrew ${newamount} from ${user.number} on ${date}`;
 
     await this.historyService.insertHistory(user.email, message);
-    res.json({ status: 200, message: message });
+    res.status(200).json({ message: message });
   }
 }

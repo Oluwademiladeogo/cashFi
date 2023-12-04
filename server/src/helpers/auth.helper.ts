@@ -34,7 +34,7 @@ const getToken = async (req) => {
     const bearerToken = req.headers['authorization']?.split(' ')[1];
     return bearerToken;
   } catch (error) {
-    throw new HttpException('Error getting token', HttpStatus.UNAUTHORIZED);
+    throw new HttpException('Token error', HttpStatus.UNAUTHORIZED);
   }
 };
 const getTokenPayload = async (bearerToken: string) => {

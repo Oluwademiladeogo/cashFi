@@ -36,7 +36,7 @@ Create a .env file inside the root of your application and include the following
 ```bash
 MONGODB_URI="your mongodb uri"
 
-JWT_SECRET="1Qwe2/dada2IBapiInq$932$dSDwe2SsiP21@edaa23jdn@sfs#34gSeDvcx"
+JWT_SECRET="your JWT secret"
 ```
 
 ### Server / API Documentaton
